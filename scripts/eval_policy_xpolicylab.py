@@ -39,6 +39,7 @@ CAMERA_NAME_MAP = {
     "right_camera": "cam_right_wrist",
     "front_camera": "cam_third_view",
 }
+PARALLEL_IDENTITY_POLICIES = frozenset({"LTE_DP", "LTE_SmolVLA", "SmolVLA"})
 
 
 def add_xpolicylab_paths(xpolicylab_root: str | os.PathLike[str] | None) -> None:
@@ -80,6 +81,15 @@ def get_embodiment_config(robot_file: str) -> dict[str, Any]:
 
 def build_policy_client(usr_args: dict[str, Any]):
     protocol = usr_args.get("protocol", "ws")
+    if (
+        protocol == "legacy_tcp"
+        and usr_args.get("policy_name") in PARALLEL_IDENTITY_POLICIES
+        and parse_bool(usr_args.get("eval_batch", False))
+        and int(usr_args.get("num_workers") or 1) > 1
+    ):
+        raise ValueError(
+            "Parallel identity-aware evaluation requires the serialized websocket protocol"
+        )
     xpolicylab_root = usr_args.get("xpolicylab_root") or os.environ.get("XPOLICYLAB_ROOT") or DEFAULT_XPOLICYLAB_ROOT
     add_xpolicylab_paths(xpolicylab_root)
 
@@ -693,7 +703,10 @@ def run_one_batch_episode(
 
     succ = False
     prepare_policy_case(model_client, task_name, seed_value, instruction, action_type)
-    reset_policy(model_client)
+    if args["policy_name"] in PARALLEL_IDENTITY_POLICIES:
+        reset_policy(model_client, env_idx=worker_id)
+    else:
+        reset_policy(model_client)
     try:
         while not is_episode_end(task_env):
             observation = task_env.get_obs()
@@ -705,7 +718,13 @@ def run_one_batch_episode(
                 task_env=task_env,
             )
             model_client.call(func_name="update_obs", obs=xpl_obs)
-            action_chunk = normalize_action_chunk(model_client.call(func_name="get_action"))
+            if args["policy_name"] in PARALLEL_IDENTITY_POLICIES:
+                action_batch = model_client.call(func_name="get_action_batch", obs=[worker_id])
+                if len(action_batch) != 1:
+                    raise RuntimeError("Policy returned an invalid single-environment action batch.")
+                action_chunk = normalize_action_chunk(action_batch[0])
+            else:
+                action_chunk = normalize_action_chunk(model_client.call(func_name="get_action"))
             if len(action_chunk) == 0:
                 raise RuntimeError("Policy returned an empty action chunk.")
 
@@ -992,9 +1011,11 @@ def build_instruction(args: dict[str, Any], episode_info: dict[str, Any], instru
     return args["task_name"]
 
 
-def reset_policy(model_client) -> None:
-    # Case meta goes through prepare_case; model.reset() takes no args.
-    model_client.call(func_name="reset")
+def reset_policy(model_client, env_idx: int | None = None) -> None:
+    if env_idx is None:
+        model_client.call(func_name="reset")
+    else:
+        model_client.call(func_name="reset_envs", obs=[int(env_idx)])
 
 
 def prepare_policy_case(model_client, task_name: str, seed: int, instruction: str, action_type: str) -> None:

@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
-# Launch the two-GPU 20k joint LTE recipe with the existing embedding table.
+# Launch a selected WaitAtGoal + LiftQA LTE recipe locally.
 set -Eeuo pipefail
 
-[[ $# -eq 0 ]] || { echo "Usage: $0" >&2; exit 2; }
+[[ $# -eq 1 ]] || { echo "Usage: $0 <training-config.yaml>" >&2; exit 2; }
 SCRIPT_DIR="$(cd -- "$(dirname -- "$0")" && pwd)"
 RMBENCH_ROOT="$(cd -- "$SCRIPT_DIR/../.." && pwd)"
-exec bash "$SCRIPT_DIR/run_training.sh" "$RMBENCH_ROOT" lte \
-  "$RMBENCH_ROOT/config/lte/waitatgoal_liftqa_lte_smolvla_2gpu_20k_embedding_cache.env"
+exec bash "$SCRIPT_DIR/run_training.sh" "$RMBENCH_ROOT" lte "$1"

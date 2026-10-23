@@ -53,16 +53,17 @@ bash scripts/update_xpolicylab.sh
 ### Remote GPU setup (Brev)
 
 For the LTE/SmolVLA remote training workflow, use the focused Brev launcher.
-It downloads only the configured native RMBench task, converts it to LeRobot
-v3, and starts the baseline and LTE runs sequentially.
+It downloads or converts the configured dataset and starts the one policy run
+described by the selected YAML recipe.
 
 ```bash
-bash scripts/lte/launch_brev.sh entire-aquamarine-penguin both
+bash scripts/lte/launch_brev.sh entire-aquamarine-penguin lte \
+  config/lte/lte_smolvla_battery_try_1gpu_5k.yaml
 ```
 
 See [`scripts/lte/README.md`](scripts/lte/README.md) and
-[`config/lte/battery_try.env`](config/lte/battery_try.env) for credentials,
-task selection, source revisions, and training settings.
+[`config/lte/lte_smolvla_battery_try_1gpu_5k.yaml`](config/lte/lte_smolvla_battery_try_1gpu_5k.yaml)
+for credentials, launcher metadata, and exact XPolicyLab training arguments.
 
 ## 2. Download Assets
 To download the assets, run the following command. If you encounter any rate-limit issues, please log in to your Hugging Face account by running `huggingface-cli login`:

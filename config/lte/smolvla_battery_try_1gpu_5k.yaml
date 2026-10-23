@@ -1,0 +1,36 @@
+# Baseline-only batch-8 battery_try recipe. Keys under args are exact trainer arguments.
+launcher:
+  task: battery_try
+  env_cfg: aloha_agilex
+args:
+  policy.path: lerobot/smolvla_base
+  policy.device: cuda
+  policy.push_to_hub: false
+  policy.freeze_vision_encoder: true
+  policy.train_expert_only: true
+  policy.train_state_proj: true
+  batch_size: 8
+  policy.input_features:
+    observation.state: {type: STATE, shape: [14]}
+    observation.images.camera1: {type: VISUAL, shape: [3, 240, 320]}
+    observation.images.camera2: {type: VISUAL, shape: [3, 240, 320]}
+    observation.images.camera3: {type: VISUAL, shape: [3, 240, 320]}
+  policy.output_features:
+    action: {type: ACTION, shape: [14]}
+  dataset.repo_id: local/rmbench-battery_try-aloha_agilex-v30
+  dataset.root: ~/.cache/huggingface/lerobot/local/rmbench-battery_try-aloha_agilex-v30
+  dataset.video_backend: pyav
+  output_dir: ../../checkpoints/smolvla_battery_try_1gpu_5k
+  job_name: battery_try_smolvla_5k
+  wandb.enable: true
+  wandb.entity: uts_robot_lab
+  wandb.project: RMBench
+  steps: 5000
+  save_freq: 5000
+  log_freq: 10
+  eval_freq: 0
+  seed: 0
+  rename_map:
+    observation.images.cam_high: observation.images.camera1
+    observation.images.cam_left_wrist: observation.images.camera2
+    observation.images.cam_right_wrist: observation.images.camera3

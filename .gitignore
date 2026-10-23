@@ -4,6 +4,7 @@ data/*
 !data/process_stuck.py
 !data/decode_image_bit.py
 __pycache__/
+/checkpoints/
 **/checkpoints/
 result/
 envs/curobo
@@ -31,3 +32,4 @@ envs/curobo/*
 /*.txt
 /.env
 /scripts/lte/.env
+logs/

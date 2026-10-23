@@ -1,0 +1,25 @@
+# Reference only: LTE_SmolVLA-specific policy defaults.
+# SmolVLA base defaults are listed in smolvla_defaults.yaml. Experiment recipes
+# are self-contained and do not inherit from either defaults file.
+args:
+  policy.temporal_latent_dim: 32
+  policy.temporal_hidden_dim: 128
+  policy.history_decoder_hidden_dim: 128
+  policy.num_history_queries: 16
+  policy.lambda_history: 1.0
+  policy.max_causal_history_length: 512
+  policy.history_max_episode_length: null
+  policy.temporal_num_images: 1
+  policy.temporal_embedding_cache_refresh_steps: 5000
+  policy.temporal_embedding_cache_build_batch_size: 32
+  policy.temporal_encode_chunk_size: 32
+  policy.temporal_embedding_cache_enabled: true
+  policy.temporal_image_cache_on_gpu: false
+  policy.temporal_image_cache_in_ram: false
+  policy.temporal_image_cache_build_num_threads: 32
+  policy.temporal_image_cache_build_chunk_size: 2048
+  policy.temporal_query_history_only: false
+  policy.temporal_embedding_normalize: true
+  policy.differential_lr: false
+  policy.backbone_lr_scale: 0.1
+  policy.base_policy_path: lerobot/smolvla_base

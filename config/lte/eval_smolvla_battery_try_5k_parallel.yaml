@@ -1,0 +1,29 @@
+# Parallel RMBench evaluation for the completed 5k baseline SmolVLA checkpoint.
+# Paths are resolved relative to this file, so this recipe works from any cwd.
+launcher:
+  mode: smolvla
+  task: battery_try
+  env_cfg: aloha_agilex
+  checkpoint: ../../checkpoints/smolvla_battery_try_1gpu_5k/checkpoints/005000/pretrained_model
+  policy_conda_env: smolvla
+  eval_conda_env: rmbench-eval
+  policy_gpu_id: 0
+  env_gpu_id: 0
+
+evaluation:
+  action_type: joint
+  episodes: 100
+  num_workers: 4
+  protocol: ws
+  seed: 0
+  task_config: demo_clean
+  instruction_type: seen
+  expert_check: true
+  frequency: 30
+  max_seed_attempts: 5000
+
+wandb:
+  enabled: true
+  entity: uts_robot_lab
+  project: RMBench
+  run_name: battery_try_smolvla_eval_5000_parallel4
