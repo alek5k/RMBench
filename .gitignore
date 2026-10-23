@@ -29,3 +29,5 @@ envs/curobo/*
 
 /*.json*
 /*.txt
+/.env
+/scripts/lte/.env
