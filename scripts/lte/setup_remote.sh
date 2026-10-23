@@ -39,8 +39,15 @@ git -C "${RMBENCH_ROOT}" config submodule.XPolicyLab.url "${XPOLICYLAB_URL}"
 git -C "${RMBENCH_ROOT}" submodule sync --recursive
 git -C "${RMBENCH_ROOT}" submodule update --init --recursive XPolicyLab
 XPOLICYLAB_ROOT="${RMBENCH_ROOT}/XPolicyLab"
-XPL_DIRTY="$(git -C "${XPOLICYLAB_ROOT}" status --porcelain --untracked-files=all | grep -vE '^\?\? policy/LTE_SmolVLA/' || true)"
+XPL_STATUS="$(git -C "${XPOLICYLAB_ROOT}" status --porcelain --untracked-files=all)"
+XPL_DIRTY="$(printf '%s\n' "${XPL_STATUS}" | grep -vE '^\?\? policy/LTE_SmolVLA/' || true)"
 [[ -z "${XPL_DIRTY}" ]] || { echo "Refusing to replace a dirty XPolicyLab workspace." >&2; exit 1; }
+# Older launches installed LTE_SmolVLA as an untracked overlay. It became
+# tracked on XPolicyLab main, so remove only that known overlay before checkout
+# to prevent Git from rejecting the transition as an untracked-file conflict.
+if printf '%s\n' "${XPL_STATUS}" | grep -qE '^\?\? policy/LTE_SmolVLA/'; then
+  rm -rf "${XPOLICYLAB_ROOT}/policy/LTE_SmolVLA"
+fi
 git -C "${XPOLICYLAB_ROOT}" remote set-url origin "${XPOLICYLAB_URL}"
 git -C "${XPOLICYLAB_ROOT}" fetch origin "${XPOLICYLAB_REF}"
 git -C "${XPOLICYLAB_ROOT}" checkout --detach "origin/${XPOLICYLAB_REF}"
