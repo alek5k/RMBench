@@ -1,0 +1,7 @@
+predecessor_state: /data/RMBench-state/liftqa-tempo-horizon10-20k-seeds1-2-queue.json
+expected_predecessor_run_ids: [895576c1, e035a5c9]
+predecessor_checkpoint_step: 20000
+poll_seconds: 15
+training_config: battery_try_tempo_horizon10_100k_seed0.yaml
+reference_resolved_config: /data/RMBench-state/queues/battery-try-tempo-horizon10-100k-seed0-58ae3446/reference_resolved_config.json
+reference_processor_dir: /data/RMBench-state/queues/battery-try-tempo-horizon10-100k-seed0-58ae3446/reference_processors

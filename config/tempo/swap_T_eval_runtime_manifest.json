@@ -1,0 +1,11 @@
+{
+  "roots": {
+    "/home/ubuntu/miniforge3/envs/rmbench-eval": {"files": 72282, "bytes": 14585596006, "symlinks": 1227},
+    "/data/RMBench-state/envs/curobo": {"files": 597, "bytes": 246525862, "symlinks": 0},
+    "/data/RMBench-state/assets": {"files": 1040, "bytes": 1352906205, "symlinks": 0}
+  },
+  "critical_sha256": {
+    "/home/ubuntu/miniforge3/envs/rmbench-eval/bin/python3.10": "71d9ac7be5fc5e46334b77d59dfd132b662ef04997f595bbd193480876c036e1",
+    "/home/ubuntu/miniforge3/envs/rmbench-eval/lib/python3.10/site-packages/torch/_C.cpython-310-x86_64-linux-gnu.so": "1c5e0d6a312a59dc2c8587eac79ffa3eedcc416e79d1b688cbaf2fff02278472"
+  }
+}

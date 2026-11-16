@@ -19,13 +19,15 @@ LAUNCHER_KEYS = {
     "env_cfg",
     "num_processes",
     "cuda_visible_devices",
+    "experiment_id",
     "conda_env",
     "lte_smolvla_source",
     "single_camera",
     "wait_for_evals",
+    "post_train_temporal_evals",
     "dataset",
 }
-DATASET_SETUP_KEYS = {"repo_ids", "download"}
+DATASET_SETUP_KEYS = {"repo_ids", "download", "tasks", "temporal", "merge_repo_id"}
 
 
 def load_config(path: Path) -> dict[str, Any]:
@@ -50,6 +52,14 @@ def load_config(path: Path) -> dict[str, Any]:
         raise ValueError(f"Unknown launcher keys: {', '.join(sorted(unknown))}")
     if "task" not in launcher or "env_cfg" not in launcher:
         raise ValueError("launcher.task and launcher.env_cfg are required")
+    if "experiment_id" in launcher:
+        experiment_id = launcher["experiment_id"]
+        if not isinstance(experiment_id, str) or not experiment_id.strip():
+            raise ValueError("launcher.experiment_id must be a non-empty string")
+    if "post_train_temporal_evals" in launcher and not isinstance(
+        launcher["post_train_temporal_evals"], bool
+    ):
+        raise ValueError("launcher.post_train_temporal_evals must be true or false")
 
     dataset = launcher.get("dataset", {})
     if dataset and not isinstance(dataset, dict):
@@ -75,6 +85,9 @@ def scalar(value: Any, key: str, config_path: Path) -> str:
         return json.dumps(value, separators=(",", ":"))
     expanded = os.path.expandvars(os.path.expanduser(str(value)))
     if key == "output_dir" and not os.path.isabs(expanded):
+        output_root = os.environ.get("RMBENCH_OUTPUT_ROOT")
+        if output_root:
+            return str((Path(output_root).expanduser().resolve() / Path(expanded).name))
         return str((config_path.resolve().parent / expanded).resolve())
     return expanded
 

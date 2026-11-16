@@ -1,0 +1,6 @@
+predecessor_state: /data/RMBench-state/waitatgoal-tempo-very-high-lr-20k-seed1-queue.json
+training_run_id: 4c5862b9
+evaluation_config: eval_waitatgoal_tempo_very_high_lr_20k_seed1_100ep.yaml
+# Reuse the proven evaluator without the historical release's old queue gate.
+evaluation_wrapper: /data/RMBench-state/queues/liftqa-smolvla-four-evals-5f96e30c/scripts/tempo/run_temporal_eval_original.sh
+poll_seconds: 15

@@ -1,0 +1,38 @@
+# Native control matched to mild-decay TEMPO GLA 404f54a1.
+# Fresh from pretrained weights, not the TEMPO checkpoint; no temporal modules.
+training:
+  policy_variant: smolvla
+  reference_wandb_run: uts_robot_lab/RMBench/404f54a1
+  task_name: waitatgoal
+  env_cfg_type: temporal
+  allow_tf32: true
+  repo_id: local/waitatgoal_v4
+  dataset_root: /data/RMBench-state/datasets/waitatgoal_v4
+  pretrained_path: lerobot/smolvla_base
+  pretrained_revision: 5e8d12a6e2975b0e5e5fce7c8caf47c371d257b6
+  vlm_revision: 7b375e1b73b11138ff12fe22c8f2822d8fe03467
+  output_dir: /data/RMBench-state/checkpoints/smolvla_waitatgoal_mild_decay_10k
+  steps: 10000
+  batch_size: 8
+  num_workers: 8
+  sampling: shuffle
+  drop_last: false
+  shared_prefix_points_per_episode: 1
+  seed: 0
+  learning_rate: 0.0001
+  minimum_lr: 0.000075
+  scheduler: legacy  # Cosine 1e-4 -> 7.5e-5 over 10k updates, matching TEMPO.
+  scheduler_decay_steps: 30000  # Retained metadata; unused on this direct LR path.
+  warmup_steps: 0
+  weight_decay: 1.0e-10
+  betas: [0.9, 0.95]
+  epsilon: 1.0e-8
+  grad_clip: 10.0
+  save_interval: 10000
+  log_interval: 10
+  wandb_enabled: true
+  wandb_log_checkpoints: false
+  wandb_project: RMBench
+  wandb_run_id: 596ab8f2
+  wandb_group: 261105_smolvla_waitatgoal_mild_decay_10k
+  run_name: waitatgoal_smolvla_mild_decay_10k

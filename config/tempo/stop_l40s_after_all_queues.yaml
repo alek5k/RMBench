@@ -1,0 +1,55 @@
+# Stop only; both complete-queue barriers must pass before either instance stops.
+action: stop
+delete: false
+barrier: all_queues_on_both_instances_complete
+poll_seconds: 60
+idle_confirmations: 2
+instances:
+  - instance: normal-scarlet-vole
+    instance_id: pk47azbb5
+    queues:
+      - kind: single
+        state: /data/RMBench-state/tempo-cover-blocks-final-eval-9b4a762e.json
+        expected_runs:
+          - id: 9b4a762e
+            step: 100000
+            checkpoint: /home/ubuntu/RMBench-state/checkpoints/cover_blocks_tempo_predict50_act20_100k_seed0/100000
+      - kind: suite
+        state: /data/RMBench-state/cover-blocks-predict50-act50-suite-261109.json
+        expected_runs:
+          - id: 8d2f6a10
+            step: 200000
+            checkpoint: /data/RMBench-state/checkpoints/cover_blocks_tempo_predict50_act50_200k_seed0/200000
+          - id: 5c90b73a
+            step: 100000
+            checkpoint: /data/RMBench-state/checkpoints/cover_blocks_tempo_predict50_act50_100k_history5x_seed0/100000
+          - id: c74e092b
+            step: 100000
+            checkpoint: /data/RMBench-state/checkpoints/cover_blocks_tempo_predict50_act50_100k_train_llm_seed0/100000
+  - instance: calm-crimson-urial
+    instance_id: zcb67bfcs
+    queues:
+      - kind: suite
+        state: /data/RMBench-state/waitatgoal-reconstruction-baselines-261110.json
+        expected_runs:
+          - id: e2a713c0
+            step: 10000
+            checkpoint: /data/RMBench-state/checkpoints/waitatgoal_tempo_history_mean_horizon10_10k_seed1/010000
+          - id: 9d35f6b1
+            step: 10000
+            checkpoint: /data/RMBench-state/checkpoints/waitatgoal_tempo_current_frame_horizon10_10k_seed1/010000
+      - kind: suite
+        state: /data/RMBench-state/cover-blocks-query-study-261110.json
+        expected_runs:
+          - id: 31c8ad72
+            step: 100000
+            checkpoint: /data/RMBench-state/checkpoints/cover_blocks_tempo_predict50_act50_100k_queries32_seed0/100000
+          - id: 64b2e9f1
+            step: 100000
+            checkpoint: /data/RMBench-state/checkpoints/cover_blocks_tempo_predict50_act50_100k_queries64_seed0/100000
+      - kind: suite
+        state: /data/RMBench-state/cover-blocks-loss-balance-261110.json
+        expected_runs:
+          - id: b016a9c4
+            step: 100000
+            checkpoint: /data/RMBench-state/checkpoints/cover_blocks_tempo_predict50_act50_100k_queries16_balanced_history_seed0/100000

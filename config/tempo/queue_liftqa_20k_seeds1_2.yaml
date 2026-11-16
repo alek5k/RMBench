@@ -1,0 +1,32 @@
+# Four fresh runs; every training is followed by its own final-checkpoint eval.
+task: liftqa
+steps: 20000
+evaluation_seed: 0
+experiment_prefix: '261105'
+poll_seconds: 15
+runtime_dir: /data/RMBench-state/queues/liftqa-20k-seeds1-2/generated
+log_dir: /data/RMBench-state/logs/liftqa-20k-seeds1-2
+checkpoint_root: /data/RMBench-state/checkpoints
+eval_root: /data/RMBench-state/eval
+templates:
+  smolvla:
+    training: liftqa_smolvla_reference_20k.yaml
+    evaluation: eval_liftqa_smolvla_reference_20k_100ep.yaml
+    resolved: /data/RMBench-state/checkpoints/smolvla_liftqa_reference_20k/resolved_config.json
+  tempo:
+    training: liftqa_smolvla_gla_reference_20k.yaml
+    evaluation: eval_liftqa_gla_reference_20k_100ep.yaml
+    resolved: /data/RMBench-state/checkpoints/tempo_smolvla_liftqa_gla_reference_20k/resolved_config.json
+runs:
+  - policy: smolvla
+    seed: 1
+    run_id: de64d576
+  - policy: tempo
+    seed: 1
+    run_id: 30980ebb
+  - policy: smolvla
+    seed: 2
+    run_id: 0dac0ddb
+  - policy: tempo
+    seed: 2
+    run_id: 4254be1e

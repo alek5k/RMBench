@@ -4,6 +4,7 @@ set -Eeuo pipefail
 
 [[ $# -eq 1 ]] || { echo "Usage: $0 <RMBench-root>" >&2; exit 2; }
 RMBENCH_ROOT="$(cd "$1" && pwd)"
+STATE_ROOT="${RMBENCH_STATE_ROOT:-${RMBENCH_ROOT}}"
 CONDA_BASE="${HOME}/miniforge3"
 EVAL_ENV="rmbench-eval"
 CUDA_CHANNEL="nvidia/label/cuda-12.1.1"
@@ -36,8 +37,8 @@ python -m pip install 'websockets>=14.0' 'msgpack>=1.0.8' 'msgpack-numpy>=0.4.8'
 # 12 and 13 development headers.
 conda install -y --override-channels -c "${CUDA_CHANNEL}" cuda-toolkit=12.1.1
 export CUDA_HOME="${CONDA_PREFIX}"
-export CC=/usr/bin/g++
-export CXX=/usr/bin/g++
+export CC="${CC:-/usr/bin/gcc}"
+export CXX="${CXX:-/usr/bin/g++}"
 export TORCH_CUDA_ARCH_LIST="8.9"  # L40S (Ada)
 export MAX_JOBS="${MAX_JOBS:-4}"
 
@@ -49,14 +50,19 @@ fi
 [[ -x "${CUDA_HOME}/bin/nvcc" ]] || { echo "CUDA 12.1 nvcc is missing" >&2; exit 1; }
 [[ -f "${CUDA_HOME}/include/thrust/complex.h" ]] || { echo "CUDA 12.1 Thrust headers are missing" >&2; exit 1; }
 
-CUROBO_ROOT="${RMBENCH_ROOT}/envs/curobo"
+CUROBO_ROOT="${STATE_ROOT}/envs/curobo"
 if [[ ! -d "${CUROBO_ROOT}/.git" ]]; then
   git clone --branch "${CUROBO_REF}" --depth 1 https://github.com/NVlabs/curobo.git "${CUROBO_ROOT}"
 fi
 git -C "${CUROBO_ROOT}" fetch --depth 1 origin "${CUROBO_REF}"
 git -C "${CUROBO_ROOT}" checkout --detach FETCH_HEAD
 python -m pip install -e "${CUROBO_ROOT}" --no-build-isolation
-python -m pip install 'warp-lang==1.12.0' 'setuptools==69.5.1'
+# CuRobo's optional mesh dependencies may upgrade NumPy again. Restore the
+# measured reference ABI and a NumPy-1-compatible Zarr/NumCodecs pair *after*
+# resolving them; otherwise fresh installs pass imports but fail `pip check`.
+python -m pip install 'warp-lang==1.12.0' 'setuptools==69.5.1' \
+  'numpy==1.26.4' 'zarr==2.18.3' 'numcodecs<0.16' \
+  'opencv-python==4.10.0.84' 'opencv-python-headless==4.10.0.84'
 # All runtime dependencies were installed and pinned above.  Avoid allowing
 # this editable convenience package to replace the simulator's NumPy/OpenCV.
 python -m pip install -e "${RMBENCH_ROOT}/XPolicyLab" --no-deps
@@ -73,7 +79,7 @@ sed -i -E 's/(if np.linalg.norm\(delta_twist\) < 1e-4 )(or collide )(or not with
 # Assets are intentionally not part of the training bootstrap, but simulator
 # evaluation requires them. Source credentials only if they were staged.
 if [[ ! -f "${RMBENCH_ROOT}/assets/objects/objaverse/list.json" ]]; then
-  credential_file="${RMBENCH_ROOT}/scripts/lte/.env"
+  credential_file="${RMBENCH_CREDENTIAL_FILE:-${RMBENCH_ROOT}/scripts/lte/.env}"
   [[ -r "${credential_file}" ]] && { set -a; source "${credential_file}"; set +a; }
   (cd "${RMBENCH_ROOT}" && bash scripts/_download_assets.sh)
 fi

@@ -1,0 +1,10 @@
+# Authoritative default LR recipe for new WaitAtGoal SmolVLA / TEMPO runs.
+# Keep native warmup even for constant LR (then only set minimum_lr to peak).
+# The native scheduler scales this preset to the requested run duration:
+# 10k -> 333 warmup updates; 12k -> 400; decay ends at the final update.
+training:
+  scheduler: smolvla
+  learning_rate: 0.0001
+  minimum_lr: 0.000075
+  warmup_steps: 1000
+  scheduler_decay_steps: 30000

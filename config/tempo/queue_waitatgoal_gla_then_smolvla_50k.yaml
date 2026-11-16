@@ -1,0 +1,4 @@
+predecessor_state: /data/RMBench-state/smolvla-train-eval-c952aa61.json
+predecessor_training_run_id: c952aa61
+training_config: waitatgoal_smolvla_reference_50k.yaml
+poll_seconds: 30

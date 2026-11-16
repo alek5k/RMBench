@@ -1,0 +1,4 @@
+predecessor_state: /data/RMBench-state/waitatgoal-gla-mild-decay-10k-queue.json
+training_run_id: 404f54a1
+evaluation_config: eval_waitatgoal_gla_mild_decay_10k_100ep.yaml
+poll_seconds: 15

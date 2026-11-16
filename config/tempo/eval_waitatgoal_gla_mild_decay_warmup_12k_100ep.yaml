@@ -1,0 +1,21 @@
+launcher:
+  execution: brev
+  policy_kind: tempo_smolvla
+  eval_environment: /data/RMBench-state/envs/tempo-temporal-eval
+  shared_policy_environment: /home/shadeform/RMBench-state/envs/tempo-smolvla
+  checkpoint: /data/RMBench-state/checkpoints/tempo_smolvla_waitatgoal_gla_mild_decay_warmup_12k/012000
+  output_root: /data/RMBench-state/eval/tempo_waitatgoal_gla_mild_decay_warmup_12k_100ep
+  temporal_env_root: /data/RMBench-state/deps/temporal-eval
+evaluation:
+  task: waitatgoal
+  episodes: 100
+  max_steps: 400
+  seed: 0
+  instruction: wait at the goal and return to the start
+wandb:
+  enabled: true
+  entity: uts_robot_lab
+  project: RMBench
+  run_name: waitatgoal_tempo_smolvla_gla_mild_decay_warmup_eval_12000_100ep
+  group: 261105_tempo_smolvla_gla_waitatgoal_mild_decay_warmup_12k
+  training_run_id: db90e7a3

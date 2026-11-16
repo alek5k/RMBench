@@ -1,0 +1,4 @@
+predecessor_state: /data/RMBench-state/waitatgoal-gla-holdout10-12k-queue.json
+training_run_id: 7bd249f0
+evaluation_config: eval_waitatgoal_gla_holdout10_12k_100ep.yaml
+poll_seconds: 15

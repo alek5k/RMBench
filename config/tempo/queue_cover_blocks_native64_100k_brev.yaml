@@ -1,0 +1,8 @@
+variant: native64
+training_config: cover_blocks_tempo_native64_predict50_act50_100k_seed0.yaml
+eval_config: eval_cover_blocks_tempo_native64_predict50_act50_100k_seed0.yaml
+reference_config: cover_blocks_tempo_predict50_act50_200k_seed0.yaml
+reference_resolved_config: /data/RMBench-state/checkpoints/cover_blocks_tempo_predict50_act50_200k_seed0/resolved_config.json
+reference_processors: /data/RMBench-state/checkpoints/cover_blocks_tempo_predict50_act50_200k_seed0/100000
+preparation_config: prepare_cover_blocks_queries.yaml
+state: /data/RMBench-state/cover-ablation-718d9127.json

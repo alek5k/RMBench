@@ -1,0 +1,46 @@
+# normal-scarlet-vole (1x L40S). All experiment parameters are in this file.
+training:
+  repo_id: local/rmbench-battery_try-aloha_agilex-v30
+  pretrained_path: /data/RMBench-state/models/pi05_base_pytorch
+  pretrained_sha256: f722b8d13a9c70ee2fe7451568fce1ded46d28d30f0fb7b89b801237514d85b1
+  norm_stats_dir: /data/RMBench-state/assets/tempo/battery_try
+  output_dir: /data/RMBench-state/checkpoints/tempo_pi05_battery_try_action_expert_100k_optimized
+  steps: 100000
+  batch_size: 8
+  accumulation_steps: 1
+  num_workers: 4
+  history_bucket_batches: 32  # Sort random pools of 32 batches by history length; keep every frame/history.
+  seed: 0
+  action_horizon: 50
+  action_dim: 14
+  learning_rate: 0.000025
+  minimum_lr: 0.0000025
+  warmup_steps: 1000
+  weight_decay: 1.0e-10
+  betas: [0.9, 0.95]
+  epsilon: 1.0e-8
+  grad_clip: 1.0
+  freeze_vision: true
+  train_action_expert_only: true  # Pi05 VLM (vision, projector, LLM) locked; expert and TEMPO train.
+  gradient_checkpointing: true
+  save_interval: 20000  # Full weights + optimizer + config + normalization, on the attached /data disk.
+  log_interval: 10
+  wandb_enabled: true
+  wandb_project: RMBench
+  wandb_entity: null  # Read WANDB_ENTITY from the credential environment.
+  run_name: battery_try_tempo_pi05_action_expert_100k_optimized
+  embedding_cache_dir: /data/RMBench-state/embedding_cache/pi05_battery_try_pool2
+  embedding_cache_batch_size: 64  # Images per build batch, ~21 frames with three cameras. Measure peak VRAM.
+memory:
+  num_tokens: 4
+  width: 64
+  layers: 2
+  heads: 4
+  mlp_ratio: 4
+  num_cameras: 3
+  spatial_pool_grid: 2
+  history_queries: 16
+  history_loss_weight: 1.0
+  max_history_frames: 2048
+  vision_encode_batch_size: 64
+  checkpoint_recurrence: false  # Avoid replaying the small memory Transformer again in backward (L40S).

@@ -1,0 +1,30 @@
+# Final 100k checkpoint of 06075719, on the same L40S as the earlier 74% eval.
+launcher:
+  policy_name: TEMPO_SmolVLA
+  policy_python: /home/ubuntu/RMBench-state/envs/tempo-smolvla/bin/python
+  simulator_python: /home/ubuntu/miniforge3/envs/rmbench-eval/bin/python
+  checkpoint: /data/RMBench-state/checkpoints/battery_try_tempo_predict50_act10_100k_seed0/100000
+  output_root: /data/RMBench-state/evaluations/battery_try_tempo_predict50_act10_100k_seed0
+  smovla_root: /data/RMBench-state/deps/smovla
+  wandb_logger_script: /data/RMBench-releases/e363a647604d798fa69e/RMBench/scripts/lte/log_eval_wandb.py
+  wandb_metadata_helper: /data/RMBench-releases/e363a647604d798fa69e/RMBench/XPolicyLab/utils/tempo_wandb.py
+evaluation:
+  task: battery_try
+  env_cfg: aloha_agilex
+  action_type: joint
+  episodes: 100
+  num_workers: 4
+  seed: 0
+  task_config: demo_clean
+  instruction_type: seen
+  expert_check: true
+  frequency: 30
+  max_seed_attempts: 5000
+wandb:
+  enabled: true
+  entity: uts_robot_lab
+  project: RMBench
+  run_name: battery_try_tempo_predict50_act10_100k_seed0_eval
+  group: 261107_tempo_battery_try_predict50_act10_100k_seed0
+  training_run_id: "06075719"
+  tags: [predict50-act10, final-checkpoint]

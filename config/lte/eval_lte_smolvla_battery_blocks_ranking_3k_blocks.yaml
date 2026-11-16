@@ -1,0 +1,30 @@
+# Evaluation of the available joint Battery Try + Blocks Ranking LTE SmolVLA
+# checkpoint. The generic simulator evaluator accepts one task per manifest.
+launcher:
+  mode: lte
+  task: blocks_ranking_try
+  env_cfg: aloha_agilex
+  checkpoint: ~/RMBench-state/checkpoints/lte_smolvla_battery_blocks_ranking_1gpu_60k/checkpoints/003000/pretrained_model
+  policy_conda_env: RMBench
+  eval_conda_env: rmbench-eval
+  policy_gpu_id: 0
+  env_gpu_id: 0
+
+evaluation:
+  action_type: joint
+  episodes: 100
+  num_workers: 4
+  protocol: ws
+  seed: 0
+  task_config: demo_clean
+  instruction_type: seen
+  expert_check: true
+  frequency: 30
+  max_seed_attempts: 5000
+
+wandb:
+  enabled: true
+  entity: uts_robot_lab
+  project: RMBench
+  run_name: blocks_ranking_try_lte_smolvla_eval_3000_parallel4
+  experiment_id: 261024_lte_smolvla_battery_blocks_ranking

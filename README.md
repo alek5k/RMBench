@@ -53,8 +53,10 @@ bash scripts/update_xpolicylab.sh
 ### Remote GPU setup (Brev)
 
 For the LTE/SmolVLA remote training workflow, use the focused Brev launcher.
-It downloads or converts the configured dataset and starts the one policy run
-described by the selected YAML recipe.
+It builds one immutable source bundle from the local RMBench and XPolicyLab
+worktrees, verifies and extracts a versioned release remotely, downloads or
+converts the configured dataset into external mutable state, and starts the one
+policy run described by the selected YAML recipe.
 
 ```bash
 bash scripts/lte/launch_brev.sh entire-aquamarine-penguin lte \

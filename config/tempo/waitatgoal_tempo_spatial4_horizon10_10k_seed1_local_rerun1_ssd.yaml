@@ -1,0 +1,62 @@
+# Fresh restart after external /tmp cleanup interrupted worker IPC; no recovery or parameter changes.
+# Reconstruct each 2x2 pooled visual token independently; 16 time-lag samples.
+training:
+  reference_wandb_run: uts_robot_lab/RMBench/5547de5e
+  task_name: waitatgoal
+  env_cfg_type: temporal
+  memory_backend: gla
+  temporal_objective: joint
+  history_reconstruction_target: history
+  history_reconstruction_layout: patches
+  temporal_visual_pooling: adaptive
+  gla_gate_normalizer: 16.0
+  allow_tf32: true
+  repo_id: local/waitatgoal_v4
+  dataset_root: /mnt/wdblack/tempo/waitatgoal-spatial-261110/datasets/waitatgoal_v4
+  pretrained_path: lerobot/smolvla_base
+  pretrained_revision: 5e8d12a6e2975b0e5e5fce7c8caf47c371d257b6
+  vlm_revision: 7b375e1b73b11138ff12fe22c8f2822d8fe03467
+  output_dir: /home/sydney1/Repos/RMBench/logs/waitatgoal-spatial-261110-rerun1/checkpoints/waitatgoal_tempo_spatial4_horizon10_10k_seed1
+  steps: 10000
+  batch_size: 8
+  num_workers: 8
+  sampling: shuffle
+  drop_last: false
+  shared_prefix_points_per_episode: 1
+  seed: 1
+  chunk_size: 10
+  n_action_steps: 10
+  learning_rate: 0.0001
+  minimum_lr: 0.000075
+  scheduler: smolvla
+  scheduler_decay_steps: 30000
+  warmup_steps: 1000  # 333 effective warmup updates in this 10k run.
+  weight_decay: 1.0e-10
+  betas: [0.9, 0.95]
+  epsilon: 1.0e-8
+  grad_clip: 10.0
+  save_interval: 10000
+  log_interval: 10
+  wandb_enabled: true
+  wandb_log_checkpoints: false
+  wandb_project: RMBench
+  wandb_run_id: f43a91d2
+  wandb_group: 261110_tempo_waitatgoal_spatial4_horizon10_10k_seed1_rerun1
+  run_name: waitatgoal_tempo_mild_lr_decay_horizon10_10k_seed1_spatial4_rerun1
+  wandb_tags: [reconstruction-effectiveness, reconstruction-spatial4]
+  temporal_camera_keys: [observation.images.camera1]
+  embedding_cache_dir: /mnt/wdblack/tempo/waitatgoal-spatial-261110/embedding_cache/smolvla_waitatgoal_camera1_pool2
+  embedding_cache_batch_size: 64
+memory:
+  num_tokens: 4
+  width: 64
+  layers: 2
+  heads: 4
+  mlp_ratio: 4
+  num_cameras: 1
+  spatial_pool_grid: 2
+  history_queries: 16
+  history_loss_weight: 1.0
+  max_history_frames: 2048
+  vision_encode_batch_size: 64
+  checkpoint_recurrence: false

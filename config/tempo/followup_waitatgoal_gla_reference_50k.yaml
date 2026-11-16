@@ -1,0 +1,12 @@
+# Local watcher: wait for the actual finished-training marker, not an ETA timer.
+# Deliberately has no shutdown/delete option; the instance remains untouched.
+instance: binding-lavender-bedbug
+training_run_id: c952aa61
+remote_state: /data/RMBench-state/smolvla-train-eval-c952aa61.json
+remote_python: /home/shadeform/RMBench-state/envs/tempo-smolvla/bin/python
+remote_bootstrap: /home/shadeform/RMBench-state/bootstrap/tempo
+training_config: waitatgoal_smolvla_gla_reference_50k.yaml
+evaluation_config: eval_waitatgoal_gla_reference_50k.yaml
+local_directory: ../../checkpoints/tempo_smolvla_waitatgoal_gla_reference_50k
+smovla_root: ../../.deps/tempo-smovla
+poll_seconds: 30

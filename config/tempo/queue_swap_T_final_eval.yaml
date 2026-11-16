@@ -1,0 +1,7 @@
+predecessor_state: /data/RMBench-state/tempo-training-b871c40f.json
+training_config: /data/RMBench-state/queues/swap-T-p50-a50-b871c40f/swap_T_tempo_predict50_act50_100k_seed0.yaml
+training_run_id: b871c40f
+eval_config: eval_swap_T_tempo_predict50_act50_100k_seed0.yaml
+runtime_receipt: /data/RMBench-state/swap_T-eval-runtime-ready.json
+runtime_setup_state: /data/RMBench-state/swap_T-eval-runtime-setup.json
+poll_seconds: 15

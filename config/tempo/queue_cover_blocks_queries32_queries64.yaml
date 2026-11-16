@@ -1,0 +1,15 @@
+reference_config: cover_blocks_tempo_predict50_act50_200k_seed0.yaml
+reference_resolved_config: /data/RMBench-state/references/cover-blocks-query-study/reference_resolved_config.json
+reference_processors: /data/RMBench-state/references/cover-blocks-query-study/processors
+preparation_config: prepare_cover_blocks_queries.yaml
+predecessor_state: /data/RMBench-state/waitatgoal-reconstruction-baselines-261110.json
+predecessor_run_ids: [e2a713c0, 9d35f6b1]
+predecessor_results:
+  - /data/RMBench-state/eval/waitatgoal_tempo_history_mean_horizon10_10k_seed1_100ep/results.json
+  - /data/RMBench-state/eval/waitatgoal_tempo_current_frame_horizon10_10k_seed1_100ep/results.json
+poll_seconds: 15
+runs:
+  - training_config: cover_blocks_tempo_predict50_act50_100k_queries32_seed0.yaml
+    eval_config: eval_cover_blocks_tempo_predict50_act50_100k_queries32_seed0.yaml
+  - training_config: cover_blocks_tempo_predict50_act50_100k_queries64_seed0.yaml
+    eval_config: eval_cover_blocks_tempo_predict50_act50_100k_queries64_seed0.yaml

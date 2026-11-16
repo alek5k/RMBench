@@ -1,0 +1,9 @@
+predecessor_state: /data/RMBench-state/smolvla-training-8ed0d03f.json
+predecessor_training_run_id: 8ed0d03f
+training_config: waitatgoal_smolvla_gla_mild_decay_10k.yaml
+reference_gla_config: waitatgoal_smolvla_gla_constant_lr_10k.yaml
+# Explicitly permitted difference from both constant-LR controls; other LR
+# settings, optimizer/data settings and GLA memory remain strictly matched.
+training_changes:
+  minimum_lr: 0.000075
+poll_seconds: 15

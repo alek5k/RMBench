@@ -1,0 +1,9 @@
+predecessor_state: /data/RMBench-state/waitatgoal-smolvla-mild-decay-warmup-10k-queue.json
+predecessor_training_run_id: 91f4a6b2
+predecessor_eval_state: /data/RMBench-state/waitatgoal-smolvla-mild-decay-warmup-10k-eval-queue.json
+training_config: waitatgoal_smolvla_gla_mild_decay_warmup_10k.yaml
+reference_gla_config: waitatgoal_smolvla_gla_reference_10k.yaml
+training_changes:
+  minimum_lr: 0.000075
+require_native_warmup: true
+poll_seconds: 15

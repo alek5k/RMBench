@@ -1,0 +1,27 @@
+# Final-checkpoint evaluation for the 100k joint ordinary-SmolVLA control.
+launcher:
+  mode: smolvla
+  task: battery_try
+  env_cfg: aloha_agilex
+  checkpoint: ~/RMBench-state/checkpoints/smolvla_battery_try_cover_blocks_all_trainable_1gpu_100k/checkpoints/100000/pretrained_model
+  policy_conda_env: smolvla
+  eval_conda_env: rmbench-eval
+  policy_gpu_id: 0
+  env_gpu_id: 0
+evaluation:
+  action_type: joint
+  episodes: 100
+  num_workers: 4
+  protocol: ws
+  seed: 0
+  task_config: demo_clean
+  instruction_type: seen
+  expert_check: true
+  frequency: 30
+  max_seed_attempts: 5000
+wandb:
+  enabled: true
+  entity: uts_robot_lab
+  project: RMBench
+  run_name: battery_try_smolvla_battery_try_cover_blocks_eval_100000_parallel4
+  experiment_id: 261028_smolvla_battery_try_cover_blocks_all_trainable_100k

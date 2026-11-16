@@ -1,0 +1,59 @@
+# Action-expert-only LTE SmolVLA control run on WaitAtGoal.  This mirrors the
+# Battery Try recipe's small-batch frozen-backbone fine-tuning regime, while
+# retaining the temporal task schema and normalized LTE targets.
+launcher:
+  task: waitatgoal
+  env_cfg: temporal
+  experiment_id: 261025_lte_smolvla_waitatgoal_action_expert_10k
+  post_train_temporal_evals: true
+  num_processes: 1
+  cuda_visible_devices: "0"
+  conda_env: RMBench
+  single_camera: true
+  dataset:
+    repo_ids: [waitatgoal_v4]
+    temporal: true
+    download: false
+
+args:
+  policy.type: lte_smolvla
+  policy.base_policy_path: lerobot/smolvla_base
+  policy.device: cuda
+  policy.push_to_hub: false
+  policy.input_features:
+    observation.state: {type: STATE, shape: [2]}
+    observation.images.camera1: {type: VISUAL, shape: [3, 144, 144]}
+  policy.output_features:
+    action: {type: ACTION, shape: [2]}
+
+  policy.chunk_size: 30
+  policy.n_action_steps: 30
+  policy.freeze_vision_encoder: true
+  policy.train_expert_only: true
+  policy.train_state_proj: true
+
+  policy.temporal_embedding_cache_enabled: true
+  policy.temporal_image_cache_on_gpu: true
+  policy.temporal_embedding_normalize: true
+
+  # Battery Try uses batch 8, seed 0, and its default optimizer schedule.
+  batch_size: 8
+  # A single LeRobotDataset takes the task directory itself as root.  (Multi-
+  # task recipes instead use lte-multi with the common parent directory.)
+  dataset.repo_id: local/waitatgoal_v4
+  dataset.root: ~/RMBench-state/datasets/waitatgoal_v4
+  dataset.video_backend: pyav
+  # Keep the earlier pre-training launch failure intact for auditability.
+  output_dir: ../../checkpoints/lte_smolvla_waitatgoal_action_expert_1gpu_10k_v3
+  job_name: waitatgoal_lte_smolvla_action_expert_1gpu_10k_v3
+  wandb.enable: true
+  wandb.entity: uts_robot_lab
+  wandb.project: RMBench
+  steps: 10000
+  save_freq: 5000
+  log_freq: 10
+  num_workers: 8
+  eval_freq: 0
+  seed: 0
+  rename_map:
+    observation.image: observation.images.camera1

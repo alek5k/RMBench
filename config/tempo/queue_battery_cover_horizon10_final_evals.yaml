@@ -1,0 +1,16 @@
+# Run this SSH transfer watcher on the local workstation, not either cloud host.
+training_host: binding-lavender-bedbug
+evaluation_host: normal-scarlet-vole
+evaluation_root: /data/RMBench-releases/4a82afbf257d680da347/RMBench
+evaluation_stage: /data/RMBench-state/queues/battery-cover-horizon10-final-evals
+poll_seconds: 30
+runs:
+  - training_run_id: 58ae3446
+    training_state: /data/RMBench-state/battery-try-tempo-horizon10-100k-seed0-queue.json
+    training_config: battery_try_tempo_horizon10_100k_seed0.yaml
+    evaluation_config: eval_battery_try_tempo_horizon10_100k_seed0.yaml
+    release_result: /data/RMBench-state/eval-handoffs/battery_try_tempo_horizon10_100k_seed0.json
+  - training_run_id: 5c31d850
+    training_state: /data/RMBench-state/cover-blocks-tempo-horizon10-100k-seed0-queue.json
+    training_config: cover_blocks_tempo_horizon10_100k_seed0.yaml
+    evaluation_config: eval_cover_blocks_tempo_horizon10_100k_seed0.yaml

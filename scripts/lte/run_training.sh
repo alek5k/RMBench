@@ -29,7 +29,7 @@ fi
 python3 "${CONFIG_READER}" "${CONFIG_FILE}" validate
 config_get() { python3 "${CONFIG_READER}" "${CONFIG_FILE}" get "$1"; }
 
-CREDENTIAL_FILE="${RMBENCH_ROOT}/scripts/lte/.env"
+CREDENTIAL_FILE="${RMBENCH_CREDENTIAL_FILE:-${RMBENCH_ROOT}/scripts/lte/.env}"
 [[ -r "${CREDENTIAL_FILE}" ]] && { set -a; source "${CREDENTIAL_FILE}"; set +a; }
 
 XPL_ROOT="${RMBENCH_ROOT}/XPolicyLab"
@@ -40,7 +40,12 @@ if [[ "${DRY_RUN}" != true ]]; then
   smolvla_activate_conda "${SMOLVLA_CONDA_ENV:-smolvla}"
 fi
 export PYTHONPATH="${RMBENCH_ROOT}${PYTHONPATH:+:${PYTHONPATH}}"
-export HF_LEROBOT_HOME="${HOME}/.cache/huggingface/lerobot"
+export HF_LEROBOT_HOME="${HF_LEROBOT_HOME:-${HOME}/.cache/huggingface/lerobot}"
+export PYTHONDONTWRITEBYTECODE="${PYTHONDONTWRITEBYTECODE:-1}"
+if [[ -n "${RMBENCH_STATE_ROOT:-}" ]]; then
+  export WANDB_DIR="${WANDB_DIR:-${RMBENCH_STATE_ROOT}/wandb}"
+  mkdir -p "${WANDB_DIR}"
+fi
 
 LTE_SMOLVLA_SOURCE="$(config_get lte_smolvla_source)"
 if [[ -n "${LTE_SMOLVLA_SOURCE}" ]]; then
@@ -61,6 +66,13 @@ if [[ -n "${CUDA_DEVICES}" ]]; then
   export CUDA_VISIBLE_DEVICES="${CUDA_DEVICES}"
 else
   export CUDA_VISIBLE_DEVICES="$(seq -s, 0 "$((NUM_PROCESSES - 1))")"
+fi
+
+# A stable experiment ID groups the training run and all of its separately
+# logged evaluations without relying on mutable W&B display names.
+EXPERIMENT_ID="$(config_get experiment_id)"
+if [[ -n "${EXPERIMENT_ID}" ]]; then
+  export WANDB_RUN_GROUP="${EXPERIMENT_ID}"
 fi
 
 if [[ "${DRY_RUN}" != true ]]; then

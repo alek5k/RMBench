@@ -1,0 +1,5 @@
+# The completed baseline can be evaluated alongside the active GLA trainer.
+predecessor_state: /data/RMBench-state/smolvla-training-8ed0d03f.json
+training_run_id: 8ed0d03f
+evaluation_config: eval_waitatgoal_smolvla_constant_lr_10k_100ep.yaml
+poll_seconds: 15

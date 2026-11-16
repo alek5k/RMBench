@@ -1,0 +1,14 @@
+predecessor_state: /data/RMBench-state/tempo-cover-blocks-final-eval-9b4a762e.json
+predecessor_training_run_id: 9b4a762e
+predecessor_checkpoint: /home/ubuntu/RMBench-state/checkpoints/cover_blocks_tempo_predict50_act20_100k_seed0/100000
+reference_config: cover_blocks_tempo_predict50_act20_100k_seed0.yaml
+reference_resolved_config: /home/ubuntu/RMBench-state/checkpoints/cover_blocks_tempo_predict50_act20_100k_seed0/resolved_config.json
+reference_checkpoint: /home/ubuntu/RMBench-state/checkpoints/cover_blocks_tempo_predict50_act20_100k_seed0/100000
+poll_seconds: 15
+runs:
+- training_config: cover_blocks_tempo_predict50_act50_200k_seed0.yaml
+  eval_config: eval_cover_blocks_tempo_predict50_act50_200k_seed0.yaml
+- training_config: cover_blocks_tempo_predict50_act50_100k_history5x_seed0.yaml
+  eval_config: eval_cover_blocks_tempo_predict50_act50_100k_history5x_seed0.yaml
+- training_config: cover_blocks_tempo_predict50_act50_100k_train_llm_seed0.yaml
+  eval_config: eval_cover_blocks_tempo_predict50_act50_100k_train_llm_seed0.yaml

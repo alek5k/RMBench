@@ -1,0 +1,27 @@
+launcher:
+  policy_name: TEMPO_SmolVLA
+  policy_python: /home/ubuntu/RMBench-state/envs/tempo-smolvla/bin/python
+  simulator_python: /home/ubuntu/miniforge3/envs/rmbench-eval/bin/python
+  checkpoint: /data/RMBench-state/checkpoints/cover_blocks_tempo_predict50_act50_100k_queries64_seed0/100000
+  output_root: /data/RMBench-state/evaluations/cover_blocks_tempo_predict50_act50_100k_queries64_seed0
+  smovla_root: /data/RMBench-state/deps/smovla
+evaluation:
+  task: cover_blocks
+  env_cfg: aloha_agilex
+  action_type: joint
+  episodes: 100
+  num_workers: 4
+  seed: 0
+  task_config: demo_clean
+  instruction_type: seen
+  expert_check: true
+  frequency: 30
+  max_seed_attempts: 5000
+wandb:
+  enabled: true
+  entity: uts_robot_lab
+  project: RMBench
+  run_name: cover_blocks_tempo_predict50_act50_100k_queries64_seed0_eval
+  group: 261110_tempo_cover_blocks_predict50_act50_100k_queries64_seed0
+  training_run_id: 64b2e9f1
+  tags: [predict50-act50, joint-loss, final-checkpoint, reconstruction-effectiveness, history-queries-64]

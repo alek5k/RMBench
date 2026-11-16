@@ -1,0 +1,7 @@
+# Explicit original-decay study profile; does not replace the default mild decay.
+training:
+  scheduler: smolvla
+  learning_rate: 0.0001
+  minimum_lr: 0.0000025
+  warmup_steps: 1000
+  scheduler_decay_steps: 30000

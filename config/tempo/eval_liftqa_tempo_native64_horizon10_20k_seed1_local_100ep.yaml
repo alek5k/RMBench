@@ -1,0 +1,25 @@
+launcher:
+  execution: local
+  policy_kind: tempo_smolvla
+  eval_environment: /home/sydney1/Repos/RMBench/.venv-tempo-temporal-eval
+  shared_policy_environment: /home/sydney1/Repos/RMBench/.venv-tempo-smolvla
+  checkpoint: /home/sydney1/Repos/RMBench/logs/liftqa-native64-261110/horizon10/checkpoints/liftqa_tempo_native64_predict10_act10_20k_seed1/020000
+  output_root: /home/sydney1/Repos/RMBench/logs/liftqa-native64-261110/horizon10/eval/final_20k_100ep
+  temporal_env_root: /mnt/wdblack/tempo/waitatgoal-spatial-261110/deps/temporal-eval
+  smovla_root: /home/sydney1/Repos/RMBench/.deps/tempo-smovla
+  hf_home: /home/sydney1/.cache/huggingface
+  gpu_uuid: GPU-2c5eb813-551c-9bf2-0ff7-bb76e2e7ff36
+  mujoco_egl_device_id: 1  # EGL physical GPU index, independent of CUDA's logical 0.
+evaluation:
+  task: liftqa
+  episodes: 100
+  max_steps: 1000
+  seed: 0
+  instruction: lift the object, wait at the goal, and return to the start
+wandb:
+  enabled: true
+  entity: uts_robot_lab
+  project: RMBench
+  run_name: liftqa_tempo_native64_predict10_act10_20k_seed1_eval
+  group: 261110_tempo_liftqa_native64_predict10_act10_20k_seed1
+  training_run_id: d81228b7

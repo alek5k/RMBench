@@ -1,0 +1,14 @@
+original_config: /home/sydney1/Repos/RMBench/config/tempo/eval_cover_blocks_queries128_100k_200k_local.yaml
+original_simulator_log: /home/sydney1/Repos/RMBench/logs/cover-blocks-queries128-300k-261110/eval_100k_200k_261111/100000/20261111T033841.099898Z/simulator.log
+original_wandb_run_id: tfdcigpw
+output_root: /home/sydney1/Repos/RMBench/logs/cover-blocks-queries128-300k-261110/eval_100k_200k_repair_261112
+evaluation_source: /home/sydney1/Repos/RMBench/.deps/tempo-eval/cover-blocks-queries128-repair-261112/RMBench
+# Same checkpoint, horizon, simulator and success criteria; transport-only repair.
+num_workers: 2
+progress_timeout_seconds: 900
+websocket:
+  ws_ping_interval_s: null
+  ws_ping_timeout_s: null
+  request_timeout_s: 120
+  max_connect_seconds: 120
+  close_timeout_s: 10

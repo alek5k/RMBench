@@ -1,0 +1,13 @@
+study_type: spatial
+defaults_config: waitatgoal_defaults.yaml
+reference_config: waitatgoal_tempo_mild_lr_decay_horizon10_10k_seed1.yaml
+poll_seconds: 15
+# Do not race or preempt existing Cover Blocks queues on calm-crimson-urial.
+predecessor_state: /data/RMBench-state/cover-blocks-loss-balance-261110.json
+predecessor_run_ids: [b016a9c4]
+predecessor_steps: 100000
+runs:
+  - training_config: waitatgoal_tempo_spatial4_horizon10_10k_seed1.yaml
+    eval_config: eval_waitatgoal_tempo_spatial4_horizon10_10k_seed1.yaml
+  - training_config: waitatgoal_tempo_native64_horizon10_10k_seed1.yaml
+    eval_config: eval_waitatgoal_tempo_native64_horizon10_10k_seed1.yaml

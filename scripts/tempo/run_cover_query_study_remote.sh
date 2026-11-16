@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Queue only: no changes to the active WaitAtGoal source/env/jobs.
+set -Eeuo pipefail
+[[ $# -eq 2 ]] || { echo 'Usage: run_cover_query_study_remote.sh <source-root> <queue.yaml>' >&2; exit 2; }
+ROOT=$(realpath "$1")
+CONFIG=$(realpath "$2")
+STATE=/data/RMBench-state
+export SMOVLA_ROOT="$STATE/deps/smovla"
+export PYTHONPATH="$ROOT/scripts/tempo:$ROOT:$ROOT/XPolicyLab:$SMOVLA_ROOT/src"
+export HF_HOME="$STATE/huggingface" HF_LEROBOT_HOME="$STATE/datasets/lerobot" WANDB_DIR="$STATE/wandb"
+export OMP_NUM_THREADS=8 OPENBLAS_NUM_THREADS=1 PYTHONUNBUFFERED=1 TOKENIZERS_PARALLELISM=false CUDA_VISIBLE_DEVICES=0
+unset LD_LIBRARY_PATH
+set -a
+source "$STATE/credentials.env"
+set +a
+cd "$ROOT"
+exec "$HOME/RMBench-state/envs/tempo-smolvla/bin/python" "$ROOT/scripts/tempo/queue_cover_query_study.py" \
+    --root "$ROOT" --config "$CONFIG" --state "$STATE/cover-blocks-query-study-261110.json"

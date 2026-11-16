@@ -1,0 +1,56 @@
+# Re-evaluate the earlier 74/100 checkpoint without changing its 50-step horizon.
+# The active horizon-10 eval finishes first; its supervisor resumes after this eval.
+source_root: /home/sydney1/Repos/RMBench/.deps/eval-source-a05/RMBench
+checkpoint_root: /mnt/wdblack/tempo/battery_try_tempo_reference_100k_e84cae63
+training_run_id: e84cae63
+checkpoint_step: 100000
+expected_horizon: 50
+output_root: /mnt/wdblack/tempo/evaluations/battery_try_tempo_reference_e84cae63_local_sanity
+portable_root: /home/sydney1/Repos/RMBench/.deps/tempo-eval/battery-e84cae63-checkpoints
+vlm_assets: /home/sydney1/.cache/huggingface/hub/models--HuggingFaceTB--SmolVLM2-500M-Video-Instruct/snapshots/7b375e1b73b11138ff12fe22c8f2822d8fe03467
+smovla_root: /home/sydney1/Repos/RMBench/.deps/tempo-smovla
+cuda_visible_devices: GPU-ee575f7f-efbc-06d7-a10d-c50993ff045c
+sweep_state: /mnt/wdblack/tempo/evaluations/battery_try_tempo_horizon10_58ae3446_local/state.json
+sweep_config: /home/sydney1/Repos/RMBench/config/tempo/eval_battery_try_tempo_horizon10_local_all_checkpoints.yaml
+reference_source:
+  host: normal-scarlet-vole
+  checkpoint: /data/RMBench-state/checkpoints/tempo_smolvla_battery_try_gla_reference_100k/100000
+  sha256:
+    config.json: 22d314f71b083a88d4927dc9f9ffa3b8e859482ceeb942ff43196bb35452cb89
+    model.safetensors: 2b305718c44c8c12d9cdb4cee5c080301b1efaff08b669dfac673fad2baac579
+    optimizer.pt: f66ca4278d8c01077d6bc17aedc24b07e3f5aea2e1044b9e624a5774e3e2b691
+    policy_postprocessor.json: c2ec9f9760e19b11648f361a04e1bd7661f2cc015d2a7b9769d43209cfe90b61
+    policy_postprocessor_step_0_unnormalizer_processor.safetensors: f9e7a62cf206e84a9226dfb8fc1cbe7028db1e161c225c2993dbaf995233cece
+    policy_preprocessor.json: 611050d2dfb316564a0ca72da506a3b9274b0c80c3553aa440bb5d806c1d57cf
+    policy_preprocessor_step_5_normalizer_processor.safetensors: f9e7a62cf206e84a9226dfb8fc1cbe7028db1e161c225c2993dbaf995233cece
+    tempo_run.json: adb6499e96a2f911792c6d68d69276281ce5681692b57ed8ee63cc62a114327f
+launcher:
+  policy_name: TEMPO_SmolVLA
+  policy_python: /home/sydney1/Repos/RMBench/.venv-tempo-smolvla/bin/python
+  simulator_python: /home/sydney1/Repos/RMBench/.venv-tempo-rmbench-eval/bin/python
+  wandb_logger_script: /home/sydney1/Repos/RMBench/scripts/lte/log_eval_wandb.py
+  wandb_metadata_helper: /home/sydney1/Repos/XPolicyLab/utils/tempo_wandb.py
+  simulator_env:
+    LD_PRELOAD: /home/sydney1/Repos/RMBench/.deps/oidn/oidn-2.3.3.x86_64.linux/lib/libOpenImageDenoise.so.2.3.3
+    VR_OVERRIDE: /home/sydney1/Repos/RMBench/.deps/tempo-eval/no-vr
+evaluation:
+  task: battery_try
+  env_cfg: aloha_agilex
+  action_type: joint
+  episodes: 100
+  num_workers: 4
+  seed: 0
+  task_config: demo_clean
+  instruction_type: seen
+  expert_check: true
+  frequency: 30
+  max_seed_attempts: 5000
+wandb:
+  enabled: true
+  entity: uts_robot_lab
+  project: RMBench
+  run_name: battery_try_tempo_smolvla_params_100k_eval
+  group: 261104_tempo_smolvla_gla_battery_try_reference
+  training_run_id: e84cae63
+  checkpoint_in_name: true
+  tags: [local, reference-sanity-check, prior-success-74pct]

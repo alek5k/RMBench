@@ -1,0 +1,16 @@
+# Resume the interrupted Cover Blocks LTE run from its complete 10k state.
+# The checkpoint's train_config supplies the original full recipe; these CLI
+# overrides select that state and prevent W&B from duplicating checkpoints.
+launcher:
+  task: cover_blocks
+  env_cfg: aloha_agilex
+  experiment_id: 261030_lte_smolvla_cover_blocks_action_expert_100k
+  num_processes: 1
+  cuda_visible_devices: "0"
+  conda_env: smolvla
+args:
+  config_path: ~/RMBench-state/checkpoints/lte_smolvla_cover_blocks_action_expert_1gpu_100k/checkpoints/010000/pretrained_model/train_config.json
+  resume: true
+  wandb.disable_artifact: true
+  dataset.repo_id: local/rmbench-cover_blocks-aloha_agilex-v30
+  dataset.root: ~/.cache/huggingface/lerobot/local/rmbench-cover_blocks-aloha_agilex-v30

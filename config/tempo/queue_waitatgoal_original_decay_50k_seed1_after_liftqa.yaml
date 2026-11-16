@@ -1,0 +1,14 @@
+predecessor_state: /data/RMBench-state/liftqa-20k-seeds1-2-queue.json
+expected_predecessor_run_ids: [de64d576, 30980ebb, 0dac0ddb, 4254be1e]
+poll_seconds: 15
+runs:
+  - policy: smolvla
+    training: waitatgoal_smolvla_original_decay_50k_seed1.yaml
+    evaluation: eval_waitatgoal_smolvla_original_decay_50k_seed1_100ep.yaml
+    reference: /data/RMBench-state/checkpoints/smolvla_waitatgoal_reference_10k/resolved_config.json
+    log: /data/RMBench-state/logs/waitatgoal-original-decay-50k-seed1/smolvla.log
+  - policy: tempo
+    training: waitatgoal_tempo_original_decay_50k_seed1.yaml
+    evaluation: eval_waitatgoal_tempo_original_decay_50k_seed1_100ep.yaml
+    reference: /data/RMBench-state/checkpoints/tempo_smolvla_waitatgoal_gla_reference_10k/resolved_config.json
+    log: /data/RMBench-state/logs/waitatgoal-original-decay-50k-seed1/tempo.log

@@ -1,0 +1,9 @@
+training_config: battery_try_tempo_predict50_act20_100k_seed0.yaml
+eval_config: eval_battery_try_tempo_predict50_act20_100k_seed0.yaml
+reference_resolved_config: /data/RMBench-state/checkpoints/battery_try_tempo_predict50_act10_100k_seed0/resolved_config.json
+reference_processor_dir: /data/RMBench-state/checkpoints/battery_try_tempo_predict50_act10_100k_seed0/100000
+predecessor_result: /data/RMBench-state/evaluations/battery_try_tempo_predict50_act10_100k_seed0/20261107T074512.375377Z/completed.json
+predecessor_screen: eval-tempo-p50-a10-06075719
+predecessor_training_run_id: "06075719"
+predecessor_checkpoint: /data/RMBench-state/checkpoints/battery_try_tempo_predict50_act10_100k_seed0/100000
+poll_seconds: 10

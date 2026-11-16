@@ -39,7 +39,7 @@ EVALUATION_KEYS = {
     "frequency",
     "max_seed_attempts",
 }
-WANDB_KEYS = {"enabled", "entity", "project", "run_name"}
+WANDB_KEYS = {"enabled", "entity", "project", "run_name", "experiment_id"}
 
 
 def require_mapping(config: dict[str, Any], key: str) -> dict[str, Any]:
@@ -160,6 +160,7 @@ def shell_values(config: dict[str, Any], config_path: Path) -> dict[str, str]:
         "WANDB_ENTITY_CONFIG": str(wandb.get("entity", "")),
         "WANDB_PROJECT_CONFIG": str(wandb.get("project", "")),
         "WANDB_RUN_NAME": str(wandb.get("run_name", "")),
+        "WANDB_EXPERIMENT_ID": str(wandb.get("experiment_id", "")),
     }
     return values
 

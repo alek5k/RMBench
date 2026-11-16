@@ -1,0 +1,14 @@
+defaults_config: waitatgoal_defaults.yaml
+runs:
+  - seed: 1
+    training_queue: queue_waitatgoal_smolvla_horizon10_20k_seed1.yaml
+    training_state: /data/RMBench-state/smolvla-horizon10-20k-seed1-training.json
+    evaluation_queue: queue_eval_waitatgoal_smolvla_horizon10_20k_seed1.yaml
+    evaluation_state: /data/RMBench-state/smolvla-horizon10-20k-seed1-eval.json
+    log: /data/RMBench-state/logs/smolvla-horizon10-20k-seeds1-2/seed1.log
+  - seed: 2
+    training_queue: queue_waitatgoal_smolvla_horizon10_20k_seed2.yaml
+    training_state: /data/RMBench-state/smolvla-horizon10-20k-seed2-training.json
+    evaluation_queue: queue_eval_waitatgoal_smolvla_horizon10_20k_seed2.yaml
+    evaluation_state: /data/RMBench-state/smolvla-horizon10-20k-seed2-eval.json
+    log: /data/RMBench-state/logs/smolvla-horizon10-20k-seeds1-2/seed2.log

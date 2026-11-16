@@ -1,0 +1,27 @@
+launcher:
+  policy_name: TEMPO_SmolVLA
+  wandb_logger_script: /data/RMBench-state/queues/battery-cover-horizon10-final-evals/log_eval_wandb.py
+  wandb_metadata_helper: /data/RMBench-state/queues/battery-cover-horizon10-final-evals/tempo_wandb.py
+  policy_python: /home/ubuntu/RMBench-state/envs/tempo-smolvla/bin/python
+  simulator_python: /home/ubuntu/miniforge3/envs/rmbench-eval/bin/python
+  checkpoint: /data/RMBench-state/checkpoints/from_h100_cover_blocks_tempo_horizon10_100k_seed0/100000
+  output_root: /data/RMBench-state/evaluations/cover_blocks_tempo_horizon10_100k_seed0
+evaluation:
+  task: cover_blocks
+  env_cfg: aloha_agilex
+  action_type: joint
+  episodes: 100
+  num_workers: 4
+  seed: 0
+  task_config: demo_clean
+  instruction_type: seen
+  expert_check: true
+  frequency: 30
+  max_seed_attempts: 5000
+wandb:
+  enabled: true
+  entity: uts_robot_lab
+  project: RMBench
+  run_name: cover_blocks_tempo_horizon10_100k_seed0_eval
+  group: 261106_tempo_cover_blocks_horizon10_100k_seed0
+  training_run_id: 5c31d850

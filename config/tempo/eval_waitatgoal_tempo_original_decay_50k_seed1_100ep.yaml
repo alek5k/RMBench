@@ -1,0 +1,21 @@
+launcher:
+  execution: brev
+  policy_kind: tempo_smolvla
+  eval_environment: /data/RMBench-state/envs/tempo-temporal-eval
+  shared_policy_environment: /home/shadeform/RMBench-state/envs/tempo-smolvla
+  checkpoint: /data/RMBench-state/checkpoints/waitatgoal_tempo_original_decay_50k_seed1/050000
+  output_root: /data/RMBench-state/eval/waitatgoal_tempo_original_decay_50k_seed1_100ep
+  temporal_env_root: /data/RMBench-state/deps/temporal-eval
+evaluation:
+  task: waitatgoal
+  episodes: 100
+  max_steps: 400
+  seed: 0
+  instruction: wait at the goal and return to the start
+wandb:
+  enabled: true
+  entity: uts_robot_lab
+  project: RMBench
+  run_name: waitatgoal_tempo_original_decay_50k_seed1_eval
+  group: 261106_tempo_waitatgoal_original_decay_50k_seed1
+  training_run_id: e63ed34e

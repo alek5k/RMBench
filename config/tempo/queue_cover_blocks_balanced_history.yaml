@@ -1,0 +1,9 @@
+reference_config: cover_blocks_tempo_predict50_act50_200k_seed0.yaml
+reference_resolved_config: /data/RMBench-state/references/cover-blocks-query-study/reference_resolved_config.json
+reference_processors: /data/RMBench-state/references/cover-blocks-query-study/processors
+training_config: cover_blocks_tempo_predict50_act50_100k_queries16_balanced_history_seed0.yaml
+eval_config: eval_cover_blocks_tempo_predict50_act50_100k_queries16_balanced_history_seed0.yaml
+predecessor_state: /data/RMBench-state/cover-blocks-query-study-261110.json
+predecessor_run_ids: [31c8ad72, 64b2e9f1]
+predecessor_steps: 100000
+poll_seconds: 15

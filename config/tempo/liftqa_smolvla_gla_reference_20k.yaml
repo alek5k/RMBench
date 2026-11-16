@@ -1,0 +1,55 @@
+# Fresh LiftQA GLA training after the WaitAtGoal comparison; no task-to-task warm start.
+training:
+  reference_wandb_run: uts_robot_lab/RMBench/28d25e4b
+  task_name: liftqa
+  env_cfg_type: temporal
+  memory_backend: gla
+  gla_gate_normalizer: 16.0
+  allow_tf32: true
+  repo_id: local/liftqa_v2
+  dataset_root: /data/RMBench-state/datasets/liftqa_v2
+  pretrained_path: lerobot/smolvla_base
+  pretrained_revision: 5e8d12a6e2975b0e5e5fce7c8caf47c371d257b6
+  vlm_revision: 7b375e1b73b11138ff12fe22c8f2822d8fe03467
+  output_dir: /data/RMBench-state/checkpoints/tempo_smolvla_liftqa_gla_reference_20k
+  steps: 20000
+  batch_size: 8
+  num_workers: 8
+  sampling: shuffle
+  drop_last: false
+  shared_prefix_points_per_episode: 1
+  seed: 0
+  learning_rate: 0.0001
+  minimum_lr: 0.0000025
+  scheduler: smolvla
+  # Native preset rescales to 666 warmup steps and decay ending at 20k.
+  scheduler_decay_steps: 30000
+  warmup_steps: 1000
+  weight_decay: 1.0e-10
+  betas: [0.9, 0.95]
+  epsilon: 1.0e-8
+  grad_clip: 10.0
+  save_interval: 10000
+  log_interval: 10
+  wandb_enabled: true
+  wandb_log_checkpoints: false
+  wandb_project: RMBench
+  wandb_run_id: ab7b0d92
+  wandb_group: 261105_tempo_smolvla_gla_liftqa_20k
+  run_name: liftqa_tempo_smolvla_gla_20k
+  temporal_camera_keys: [observation.images.camera1]
+  embedding_cache_dir: /data/RMBench-state/embedding_cache/smolvla_liftqa_camera1_pool2
+  embedding_cache_batch_size: 64
+memory:
+  num_tokens: 4
+  width: 64
+  layers: 2
+  heads: 4
+  mlp_ratio: 4
+  num_cameras: 1
+  spatial_pool_grid: 2
+  history_queries: 16
+  history_loss_weight: 1.0
+  max_history_frames: 2048
+  vision_encode_batch_size: 64
+  checkpoint_recurrence: false

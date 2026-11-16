@@ -1,0 +1,13 @@
+# Simulator-only overlay; policy/Torch dependencies are inherited read-only.
+numpy==1.26.4
+# Match datasets 4.1.1 in the shared policy runtime.
+fsspec==2025.9.0
+setuptools==80.9.0
+pygame==2.6.1
+pymunk==6.11.1
+shapely==2.2.0
+scikit-image==0.26.0
+scipy==1.17.1
+mujoco==3.5.0
+robosuite @ git+https://github.com/ARISE-Initiative/robosuite.git@95743f6687ad7394ccb6e865fa4e1b99114e580d
+robosuite_models==1.0.0

@@ -1,0 +1,39 @@
+# Plain SmolVLA comparison to TEMPO 1dd44cee; identical shared training settings.
+training:
+  reference_wandb_run: uts_robot_lab/RMBench/1dd44cee
+  policy_variant: smolvla
+  task_name: waitatgoal
+  env_cfg_type: temporal
+  allow_tf32: true
+  repo_id: local/waitatgoal_v4
+  dataset_root: /data/RMBench-state/datasets/waitatgoal_v4
+  pretrained_path: lerobot/smolvla_base
+  pretrained_revision: 5e8d12a6e2975b0e5e5fce7c8caf47c371d257b6
+  vlm_revision: 7b375e1b73b11138ff12fe22c8f2822d8fe03467
+  output_dir: /data/RMBench-state/checkpoints/waitatgoal_smolvla_mild_lr_decay_horizon10_20k_seed2
+  steps: 20000
+  batch_size: 8
+  num_workers: 8
+  sampling: shuffle
+  drop_last: false
+  shared_prefix_points_per_episode: 1
+  seed: 2
+  chunk_size: 10
+  n_action_steps: 10
+  learning_rate: 0.0001
+  minimum_lr: 0.000075
+  scheduler: smolvla
+  scheduler_decay_steps: 30000
+  warmup_steps: 1000  # 666 effective warmup updates for 20k.
+  weight_decay: 1.0e-10
+  betas: [0.9, 0.95]
+  epsilon: 1.0e-8
+  grad_clip: 10.0
+  save_interval: 10000
+  log_interval: 10
+  wandb_enabled: true
+  wandb_log_checkpoints: false
+  wandb_project: RMBench
+  wandb_run_id: da10ab2d
+  wandb_group: 261106_smolvla_waitatgoal_mild_lr_decay_horizon10_20k_seed2
+  run_name: waitatgoal_smolvla_mild_lr_decay_horizon10_20k_seed2

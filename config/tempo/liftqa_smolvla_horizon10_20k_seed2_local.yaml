@@ -1,0 +1,40 @@
+# Independent pretrained initialization/sampling seed; not resumed from seed 1.
+training:
+  policy_variant: smolvla
+  reference_wandb_run: uts_robot_lab/RMBench/0dac0ddb
+  task_name: liftqa
+  env_cfg_type: temporal
+  allow_tf32: true
+  repo_id: local/liftqa_v2
+  dataset_root: /home/sydney1/Repos/RMBench/logs/liftqa-native64-261110/datasets/liftqa_v2
+  pretrained_path: lerobot/smolvla_base
+  pretrained_revision: 5e8d12a6e2975b0e5e5fce7c8caf47c371d257b6
+  vlm_revision: 7b375e1b73b11138ff12fe22c8f2822d8fe03467
+  output_dir: /home/sydney1/Repos/RMBench/logs/liftqa-smolvla-horizon10-261110/checkpoints/liftqa_smolvla_horizon10_20k_seed2
+  steps: 20000
+  batch_size: 8
+  num_workers: 8
+  sampling: shuffle
+  drop_last: false
+  shared_prefix_points_per_episode: 1
+  seed: 2
+  chunk_size: 10
+  n_action_steps: 10
+  learning_rate: 0.0001
+  minimum_lr: 0.0000025
+  scheduler: smolvla
+  scheduler_decay_steps: 30000
+  warmup_steps: 1000  # Native scaling gives 666 effective warmup updates at 20k.
+  weight_decay: 1.0e-10
+  betas: [0.9, 0.95]
+  epsilon: 1.0e-8
+  grad_clip: 10.0
+  save_interval: 10000
+  log_interval: 10
+  wandb_enabled: true
+  wandb_log_checkpoints: false
+  wandb_project: RMBench
+  wandb_run_id: 96918d29
+  wandb_group: 261110_smolvla_liftqa_horizon10_20k_seed2
+  run_name: liftqa_smolvla_horizon10_20k_seed2
+  wandb_tags: [native-smolvla, predict10-act10, local-5090]

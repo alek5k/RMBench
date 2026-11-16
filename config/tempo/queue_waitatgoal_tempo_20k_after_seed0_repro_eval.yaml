@@ -1,0 +1,11 @@
+# Cancelled by user. Do not restart seed-0 run 47102a1e.
+predecessor_state: /data/RMBench-state/gla-training-81f33025.json
+predecessor_training_run_id: 81f33025
+predecessor_eval_state: /data/RMBench-state/waitatgoal-tempo-mild-lr-decay-10k-seed0-repro-eval-queue.json
+training_config: waitatgoal_tempo_mild_lr_decay_20k_seed0.yaml
+reference_gla_config: waitatgoal_tempo_mild_lr_decay_10k_seed0_repro.yaml
+defaults_config: waitatgoal_defaults.yaml
+duration_changes:
+  steps: 20000
+require_native_warmup: true
+poll_seconds: 15

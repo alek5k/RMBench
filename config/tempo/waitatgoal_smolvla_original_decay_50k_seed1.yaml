@@ -1,0 +1,37 @@
+# User-requested original decay, explicitly overriding the mild WaitAtGoal default.
+training:
+  policy_variant: smolvla
+  reference_wandb_run: uts_robot_lab/RMBench/94501382
+  task_name: waitatgoal
+  env_cfg_type: temporal
+  allow_tf32: true
+  repo_id: local/waitatgoal_v4
+  dataset_root: /data/RMBench-state/datasets/waitatgoal_v4
+  pretrained_path: lerobot/smolvla_base
+  pretrained_revision: 5e8d12a6e2975b0e5e5fce7c8caf47c371d257b6
+  vlm_revision: 7b375e1b73b11138ff12fe22c8f2822d8fe03467
+  output_dir: /data/RMBench-state/checkpoints/waitatgoal_smolvla_original_decay_50k_seed1
+  steps: 50000
+  batch_size: 8
+  num_workers: 8
+  sampling: shuffle
+  drop_last: false
+  shared_prefix_points_per_episode: 1
+  seed: 1
+  learning_rate: 0.0001
+  minimum_lr: 0.0000025
+  scheduler: smolvla
+  scheduler_decay_steps: 30000  # Decay to the floor by 30k; hold through 50k.
+  warmup_steps: 1000  # Not rescaled: total updates exceed the 30k decay preset.
+  weight_decay: 1.0e-10
+  betas: [0.9, 0.95]
+  epsilon: 1.0e-8
+  grad_clip: 10.0
+  save_interval: 10000
+  log_interval: 10
+  wandb_enabled: true
+  wandb_log_checkpoints: false
+  wandb_project: RMBench
+  wandb_run_id: 9fc7a033
+  wandb_group: 261106_smolvla_waitatgoal_original_decay_50k_seed1
+  run_name: waitatgoal_smolvla_original_decay_50k_seed1

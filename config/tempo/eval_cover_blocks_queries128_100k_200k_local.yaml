@@ -1,0 +1,39 @@
+# Read-only checkpoint evals alongside the ongoing 300k training on GPU 0.
+source_root: /home/sydney1/Repos/RMBench/.deps/tempo-sources/0223affef18627ca3dfd/RMBench
+evaluation_source: /home/sydney1/Repos/RMBench/.deps/tempo-eval/cover-blocks-queries128-2275bd66/RMBench
+assets_root: /home/sydney1/Repos/RMBench/assets
+checkpoint_root: /home/sydney1/Repos/RMBench/logs/cover-blocks-queries128-300k-261110/checkpoints/cover_blocks_tempo_predict50_act50_300k_queries128_seed0
+checkpoint_steps: [100000, 200000]
+training_run_id: 2275bd66
+output_root: /home/sydney1/Repos/RMBench/logs/cover-blocks-queries128-300k-261110/eval_100k_200k_261111
+cuda_visible_devices: GPU-2c5eb813-551c-9bf2-0ff7-bb76e2e7ff36
+smovla_root: /home/sydney1/Repos/RMBench/.deps/tempo-smovla
+smoke_episodes: 1
+launcher:
+  policy_name: TEMPO_SmolVLA
+  policy_python: /home/sydney1/Repos/RMBench/.venv-tempo-smolvla/bin/python
+  simulator_python: /home/sydney1/Repos/RMBench/.venv-tempo-rmbench-eval/bin/python
+  simulator_env:
+    LD_PRELOAD: /home/sydney1/Repos/RMBench/.deps/oidn/oidn-2.3.3.x86_64.linux/lib/libOpenImageDenoise.so.2.3.3
+    VR_OVERRIDE: /home/sydney1/Repos/RMBench/.deps/tempo-eval/no-vr
+evaluation:
+  task: cover_blocks
+  env_cfg: aloha_agilex
+  action_type: joint
+  episodes: 100
+  num_workers: 4
+  seed: 0
+  task_config: demo_clean
+  instruction_type: seen
+  expert_check: true
+  frequency: 30
+  max_seed_attempts: 5000
+wandb:
+  enabled: true
+  entity: uts_robot_lab
+  project: RMBench
+  run_name: cover_blocks_tempo_predict50_act50_300k_queries128_seed0_eval
+  group: 261110_tempo_cover_blocks_predict50_act50_300k_queries128_seed0
+  training_run_id: 2275bd66
+  checkpoint_in_name: true
+  tags: [predict50-act50, joint-loss, reconstruction-effectiveness, history-queries-128, local-5090, checkpoint-comparison]

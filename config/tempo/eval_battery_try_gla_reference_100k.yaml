@@ -1,0 +1,25 @@
+launcher:
+  policy_name: TEMPO_SmolVLA
+  policy_python: /home/ubuntu/RMBench-state/envs/tempo-smolvla/bin/python
+  simulator_python: /home/ubuntu/miniforge3/envs/rmbench-eval/bin/python
+  checkpoint: /data/RMBench-state/checkpoints/tempo_smolvla_battery_try_gla_reference_100k/100000
+  output_root: /data/RMBench-state/evaluations/tempo_gla_battery_try_reference_100k
+evaluation:
+  task: battery_try
+  env_cfg: aloha_agilex
+  action_type: joint
+  episodes: 100
+  num_workers: 4
+  seed: 0
+  task_config: demo_clean
+  instruction_type: seen
+  expert_check: true
+  frequency: 30
+  max_seed_attempts: 5000
+wandb:
+  enabled: true
+  entity: uts_robot_lab
+  project: RMBench
+  run_name: battery_try_tempo_smolvla_gla_smolvla_params_eval_100000
+  group: 261104_tempo_smolvla_gla_battery_try_reference
+  training_run_id: e84cae63

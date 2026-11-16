@@ -1,0 +1,54 @@
+# Fresh LR study: same c556dd74 seed-1 20k recipe, only peak/final LR changes.
+training:
+  reference_wandb_run: uts_robot_lab/RMBench/c556dd74
+  task_name: waitatgoal
+  env_cfg_type: temporal
+  memory_backend: gla
+  gla_gate_normalizer: 16.0
+  allow_tf32: true
+  repo_id: local/waitatgoal_v4
+  dataset_root: /data/RMBench-state/datasets/waitatgoal_v4
+  pretrained_path: lerobot/smolvla_base
+  pretrained_revision: 5e8d12a6e2975b0e5e5fce7c8caf47c371d257b6
+  vlm_revision: 7b375e1b73b11138ff12fe22c8f2822d8fe03467
+  output_dir: /data/RMBench-state/checkpoints/waitatgoal_tempo_high_lr_20k_seed1
+  steps: 20000
+  batch_size: 8
+  num_workers: 8
+  sampling: shuffle
+  drop_last: false
+  shared_prefix_points_per_episode: 1
+  seed: 1
+  learning_rate: 0.001
+  minimum_lr: 0.0001
+  scheduler: smolvla
+  scheduler_decay_steps: 30000  # Native scaling: decay completes at 20k.
+  warmup_steps: 1000  # Native scaling: 666 effective warmup updates, retained.
+  weight_decay: 1.0e-10
+  betas: [0.9, 0.95]
+  epsilon: 1.0e-8
+  grad_clip: 10.0
+  save_interval: 10000
+  log_interval: 10
+  wandb_enabled: true
+  wandb_log_checkpoints: false
+  wandb_project: RMBench
+  wandb_run_id: 265f96b5
+  wandb_group: 261106_tempo_waitatgoal_high_lr_20k_seed1
+  run_name: waitatgoal_tempo_high_lr_20k_seed1
+  temporal_camera_keys: [observation.images.camera1]
+  embedding_cache_dir: /data/RMBench-state/embedding_cache/smolvla_waitatgoal_camera1_pool2
+  embedding_cache_batch_size: 64
+memory:
+  num_tokens: 4
+  width: 64
+  layers: 2
+  heads: 4
+  mlp_ratio: 4
+  num_cameras: 1
+  spatial_pool_grid: 2
+  history_queries: 16
+  history_loss_weight: 1.0
+  max_history_frames: 2048
+  vision_encode_batch_size: 64
+  checkpoint_recurrence: false

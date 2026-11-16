@@ -1,0 +1,5 @@
+predecessor_state: /data/RMBench-state/smolvla-horizon10-20k-seed1-training.json
+training_run_id: b9f47197
+evaluation_config: eval_waitatgoal_smolvla_mild_lr_decay_horizon10_20k_seed1_100ep.yaml
+evaluation_wrapper: /data/RMBench-state/queues/liftqa-smolvla-four-evals-5f96e30c/scripts/tempo/run_temporal_eval_original.sh
+poll_seconds: 15

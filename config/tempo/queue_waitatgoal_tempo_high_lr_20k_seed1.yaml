@@ -1,0 +1,9 @@
+predecessor_state: /data/RMBench-state/gla-training-c556dd74.json
+predecessor_training_run_id: c556dd74
+training_config: waitatgoal_tempo_high_lr_20k_seed1.yaml
+reference_gla_config: waitatgoal_tempo_mild_lr_decay_20k_seed1.yaml
+training_changes:
+  learning_rate: 0.001
+  minimum_lr: 0.0001
+require_native_warmup: true
+poll_seconds: 15

@@ -1,0 +1,25 @@
+# User replaced failed calm-crimson-urial with sound-coral-echidna.
+action: stop
+delete: false
+barrier: per_instance_queues_complete
+poll_seconds: 60
+idle_confirmations: 2
+instances:
+  - instance: normal-scarlet-vole
+    instance_id: pk47azbb5
+    queues:
+      - kind: suite
+        state: /data/RMBench-state/cover-ablation-718d9127.json
+        expected_runs:
+          - id: 718d9127
+            step: 100000
+            checkpoint: /data/RMBench-state/checkpoints/cover_blocks_tempo_native64_predict50_act50_100k_seed0/100000
+  - instance: sound-coral-echidna
+    instance_id: spzopgq1w
+    queues:
+      - kind: suite
+        state: /data/RMBench-state/cover-ablation-db47b024.json
+        expected_runs:
+          - id: db47b024
+            step: 200000
+            checkpoint: /data/RMBench-state/checkpoints/cover_blocks_tempo_predict50_act50_200k_queries16_balanced_history_seed0/200000

@@ -1,0 +1,30 @@
+# Full final-checkpoint evaluation; same benchmark recipe as the 30k/70k checks.
+launcher:
+  policy_name: TEMPO_SmolVLA
+  policy_python: /home/ubuntu/RMBench-state/envs/tempo-smolvla/bin/python
+  simulator_python: /home/ubuntu/miniforge3/envs/rmbench-eval/bin/python
+  checkpoint: /home/ubuntu/RMBench-state/checkpoints/cover_blocks_tempo_predict50_act20_100k_seed0/100000
+  output_root: /home/ubuntu/RMBench-state/evaluations/cover_blocks_tempo_predict50_act20_100k_seed0
+  smovla_root: /data/RMBench-state/deps/smovla
+  wandb_logger_script: /data/RMBench-releases/e363a647604d798fa69e/RMBench/scripts/lte/log_eval_wandb.py
+  wandb_metadata_helper: /data/RMBench-releases/e363a647604d798fa69e/RMBench/XPolicyLab/utils/tempo_wandb.py
+evaluation:
+  task: cover_blocks
+  env_cfg: aloha_agilex
+  action_type: joint
+  episodes: 100
+  num_workers: 4
+  seed: 0
+  task_config: demo_clean
+  instruction_type: seen
+  expert_check: true
+  frequency: 30
+  max_seed_attempts: 5000
+wandb:
+  enabled: true
+  entity: uts_robot_lab
+  project: RMBench
+  run_name: cover_blocks_tempo_predict50_act20_100k_seed0_eval
+  group: 261109_tempo_cover_blocks_predict50_act20_100k_seed0
+  training_run_id: 9b4a762e
+  tags: [predict50-act20, final-checkpoint, episodes-100, workers-4]

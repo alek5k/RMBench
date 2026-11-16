@@ -1,0 +1,4 @@
+predecessor_state: /data/RMBench-state/waitatgoal-smolvla-mild-decay-warmup-12k-queue.json
+training_run_id: a62f81c4
+evaluation_config: eval_waitatgoal_smolvla_mild_decay_warmup_12k_100ep.yaml
+poll_seconds: 15

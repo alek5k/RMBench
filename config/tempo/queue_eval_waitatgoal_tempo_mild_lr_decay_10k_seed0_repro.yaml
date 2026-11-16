@@ -1,0 +1,4 @@
+predecessor_state: /data/RMBench-state/gla-training-81f33025.json
+training_run_id: 81f33025
+evaluation_config: eval_waitatgoal_tempo_mild_lr_decay_10k_seed0_repro_100ep.yaml
+poll_seconds: 15

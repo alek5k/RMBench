@@ -1,0 +1,17 @@
+execution: local
+state_root: /home/sydney1/Repos/RMBench/logs/cover-blocks-queries128-300k-261110
+python: /home/sydney1/Repos/RMBench/.venv-tempo-smolvla/bin/python
+smovla_root: /home/sydney1/Repos/RMBench/.deps/tempo-smovla
+hf_home: /home/sydney1/.cache/huggingface
+gpu_uuid: GPU-ee575f7f-efbc-06d7-a10d-c50993ff045c  # Local GPU 0 only.
+poll_seconds: 30
+training_config: cover_blocks_tempo_predict50_act50_300k_queries128_seed0_local.yaml
+reference_config: cover_blocks_tempo_predict50_act50_100k_queries64_seed0.yaml
+asset_source_instance: calm-crimson-urial
+remote_dataset: /data/RMBench-state/datasets/lerobot/local/rmbench-cover_blocks-aloha_agilex-v30
+remote_cache: /data/RMBench-state/embedding_cache/smolvla_cover_blocks_camera1_pool2
+remote_reference: /data/RMBench-state/references/cover-blocks-query-study
+remote_receipt: /data/RMBench-state/datasets/cover_blocks_prepared.json
+# Reuse byte-identical prepared official HF data and frozen features, with SHA
+# verification. No remote writes, training interruption, or cloud GPU allocation.
+# Train only; no eval or machine shutdown is requested by this queue.

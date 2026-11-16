@@ -39,7 +39,7 @@ CAMERA_NAME_MAP = {
     "right_camera": "cam_right_wrist",
     "front_camera": "cam_third_view",
 }
-PARALLEL_IDENTITY_POLICIES = frozenset({"LTE_DP", "LTE_SmolVLA", "SmolVLA"})
+PARALLEL_IDENTITY_POLICIES = frozenset({"LTE_DP", "LTE_SmolVLA", "SmolVLA", "TEMPO_SmolVLA"})
 
 
 def add_xpolicylab_paths(xpolicylab_root: str | os.PathLike[str] | None) -> None:
@@ -111,6 +111,10 @@ def build_policy_client(usr_args: dict[str, Any]):
             trial_id=str(usr_args.get("trial_id", "rmbench-trial")),
             action_case_id=usr_args.get("action_case_id", "rmbench-case"),
             repeat_index=usr_args.get("repeat_index"),
+            **{key: usr_args[key] for key in (
+                "ws_ping_interval_s", "ws_ping_timeout_s", "request_timeout_s",
+                "max_connect_seconds", "close_timeout_s",
+            ) if key in usr_args},
         )
         client._robotwin_protocol = "ws"
         return client
@@ -314,7 +318,9 @@ def main(usr_args: dict[str, Any]) -> None:
     usr_args["right_arm_dim"] = len(args["right_embodiment_config"]["arm_joints_name"][1])
 
     seed = int(usr_args["seed"])
-    st_seed = 100000 * (1 + seed)
+    st_seed = int(usr_args.get("seed_start", 100000 * (1 + seed)))
+    if st_seed < 0:
+        raise ValueError("seed_start must be non-negative")
     test_num = int(usr_args.get("test_num", 100))
 
     model_client = build_policy_client(usr_args)
@@ -374,7 +380,9 @@ def main_batch(usr_args: dict[str, Any]) -> None:
         print_config(args, embodiment_name)
 
     seed = int(usr_args["seed"])
-    st_seed = 100000 * (1 + seed)
+    st_seed = int(usr_args.get("seed_start", 100000 * (1 + seed)))
+    if st_seed < 0:
+        raise ValueError("seed_start must be non-negative")
     test_num = int(usr_args.get("test_num") or 100)
     requested_workers = int(usr_args.get("num_workers") or 1)
     worker_num = max(1, min(requested_workers, test_num))

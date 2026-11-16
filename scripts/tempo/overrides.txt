@@ -1,0 +1,6 @@
+# Same NumPy policy as vendored OpenPI. Rerun is not used by this training path.
+# LeRobot's optional visualization dependency otherwise forces NumPy >=2.
+numpy==1.26.4
+opencv-python==4.11.0.86
+opencv-python-headless==4.11.0.86
+pandas==2.2.3

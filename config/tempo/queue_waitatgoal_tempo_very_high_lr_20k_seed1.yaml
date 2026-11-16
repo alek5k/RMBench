@@ -1,0 +1,9 @@
+predecessor_state: /data/RMBench-state/waitatgoal-tempo-high-lr-20k-seed1-queue.json
+predecessor_training_run_id: 265f96b5
+training_config: waitatgoal_tempo_very_high_lr_20k_seed1.yaml
+reference_gla_config: waitatgoal_tempo_high_lr_20k_seed1.yaml
+training_changes:
+  learning_rate: 0.01
+  minimum_lr: 0.001
+require_native_warmup: true
+poll_seconds: 15

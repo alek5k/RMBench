@@ -1,0 +1,6 @@
+predecessor_state: /data/RMBench-state/tempo-training-9b4a762e.json
+training_config: /data/RMBench-state/queues/cover-blocks-predict50-act20-100k-9b4a762e/cover_blocks_tempo_predict50_act20_100k_seed0.yaml
+training_run_id: 9b4a762e
+eval_config: eval_cover_blocks_tempo_predict50_act20_100k_seed0.yaml
+runtime_receipt: /data/RMBench-state/cover_blocks-final-eval-runtime-ready.json
+poll_seconds: 15

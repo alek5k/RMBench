@@ -1,0 +1,43 @@
+# Same default mild schedule; 10% episode holdout and train-only normalization.
+training:
+  policy_variant: smolvla
+  reference_wandb_run: uts_robot_lab/RMBench/a62f81c4
+  task_name: waitatgoal
+  env_cfg_type: temporal
+  allow_tf32: true
+  repo_id: local/waitatgoal_v4
+  dataset_root: /data/RMBench-state/datasets/waitatgoal_v4
+  pretrained_path: lerobot/smolvla_base
+  pretrained_revision: 5e8d12a6e2975b0e5e5fce7c8caf47c371d257b6
+  vlm_revision: 7b375e1b73b11138ff12fe22c8f2822d8fe03467
+  output_dir: /data/RMBench-state/checkpoints/smolvla_waitatgoal_holdout10_12k
+  steps: 12000
+  batch_size: 8
+  num_workers: 8
+  sampling: shuffle
+  drop_last: false
+  shared_prefix_points_per_episode: 1
+  seed: 0
+  learning_rate: 0.0001
+  minimum_lr: 0.000075
+  scheduler: smolvla
+  scheduler_decay_steps: 30000
+  warmup_steps: 1000  # Native scaling gives 400 effective warmup updates.
+  weight_decay: 1.0e-10
+  betas: [0.9, 0.95]
+  epsilon: 1.0e-8
+  grad_clip: 10.0
+  save_interval: 12000
+  log_interval: 10
+  validation_fraction: 0.1  # Whole episodes, not adjacent frame-level splitting.
+  validation_split_seed: 0  # Identical split for native and GLA.
+  validation_interval: 500
+  validation_seed: 0  # Fixed per-batch flow noise, with training RNG restored.
+  validation_batch_size: 8
+  validation_num_workers: 4
+  wandb_enabled: true
+  wandb_log_checkpoints: false
+  wandb_project: RMBench
+  wandb_run_id: 5ca813e7
+  wandb_group: 261105_smolvla_waitatgoal_holdout10_12k
+  run_name: waitatgoal_smolvla_12k_holdout10

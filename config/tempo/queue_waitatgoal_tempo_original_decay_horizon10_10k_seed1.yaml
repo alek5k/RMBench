@@ -1,0 +1,10 @@
+predecessor_state: /data/RMBench-state/tempo-horizon10-10k-seed1-training.json
+predecessor_training_run_id: 5547de5e
+predecessor_eval_state: /data/RMBench-state/tempo-horizon10-10k-seed1-eval.json
+training_config: waitatgoal_tempo_original_decay_horizon10_10k_seed1.yaml
+reference_gla_config: waitatgoal_tempo_mild_lr_decay_horizon10_10k_seed1.yaml
+training_changes:
+  minimum_lr: 0.0000025
+defaults_config: waitatgoal_original_decay.yaml
+require_native_warmup: true
+poll_seconds: 15

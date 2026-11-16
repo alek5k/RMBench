@@ -1,0 +1,9 @@
+predecessor_state: /data/RMBench-state/waitatgoal-smolvla-mild-decay-warmup-10k-queue.json
+predecessor_training_run_id: 91f4a6b2
+training_config: waitatgoal_smolvla_mild_decay_warmup_12k.yaml
+defaults_config: waitatgoal_defaults.yaml
+duration_changes:
+  steps: 12000
+  save_interval: 12000
+require_native_warmup: true
+poll_seconds: 15

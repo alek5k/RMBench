@@ -1,0 +1,8 @@
+variant: balanced200k
+training_config: cover_blocks_tempo_predict50_act50_200k_queries16_balanced_history_seed0.yaml
+eval_config: eval_cover_blocks_tempo_predict50_act50_200k_queries16_balanced_history_seed0.yaml
+reference_config: cover_blocks_tempo_predict50_act50_100k_queries16_balanced_history_seed0.yaml
+reference_resolved_config: /data/RMBench-state/references/cover-blocks-query-study/reference_resolved_config.json
+reference_processors: /data/RMBench-state/references/cover-blocks-query-study/processors
+preparation_config: prepare_cover_blocks_queries.yaml
+state: /data/RMBench-state/cover-ablation-db47b024.json

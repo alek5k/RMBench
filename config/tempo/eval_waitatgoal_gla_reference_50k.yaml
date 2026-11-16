@@ -1,0 +1,23 @@
+# Local evaluation is prepared after Brev training starts, not on the Brev instance.
+launcher:
+  execution: local
+  engine: temporal
+  followup_config: followup_waitatgoal_gla_reference_50k.yaml
+  policy_name: TEMPO_SmolVLA
+  policy_python: /home/sydney1/Repos/RMBench/.venv-tempo-smolvla/bin/python
+  checkpoint: /home/sydney1/Repos/RMBench/checkpoints/tempo_smolvla_waitatgoal_gla_reference_50k/050000
+  output_root: /home/sydney1/Repos/RMBench/eval_result/tempo_gla_waitatgoal_reference_50k
+  temporal_env_root: /home/sydney1/Repos/LTE-DP
+evaluation:
+  task: waitatgoal
+  episodes: 100
+  max_steps: 400
+  seed: 0
+  instruction: wait at the goal and return to the start
+wandb:
+  enabled: true
+  entity: uts_robot_lab
+  project: RMBench
+  run_name: waitatgoal_tempo_smolvla_gla_eval_50000
+  group: 261105_tempo_smolvla_gla_waitatgoal_50k
+  training_run_id: c952aa61

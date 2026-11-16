@@ -1,0 +1,21 @@
+launcher:
+  execution: local
+  policy_kind: tempo_smolvla
+  eval_environment: /home/sydney1/Repos/RMBench/.venv-tempo-smolvla
+  shared_policy_environment: /home/sydney1/Repos/RMBench/.venv-tempo-smolvla
+  checkpoint: /mnt/wdblack/tempo/waitatgoal-spatial-261110/rerun1/checkpoints/waitatgoal_tempo_native64_horizon10_10k_seed1/010000
+  output_root: /mnt/wdblack/tempo/waitatgoal-spatial-261110/rerun1/eval/waitatgoal_tempo_native64_horizon10_10k_seed1_100ep
+  temporal_env_root: /mnt/wdblack/tempo/waitatgoal-spatial-261110/deps/temporal-eval
+evaluation:
+  task: waitatgoal
+  episodes: 100
+  max_steps: 400
+  seed: 0
+  instruction: wait at the goal and return to the start
+wandb:
+  enabled: true
+  entity: uts_robot_lab
+  project: RMBench
+  run_name: waitatgoal_tempo_mild_lr_decay_horizon10_10k_seed1_native64_rerun1_eval
+  group: 261110_tempo_waitatgoal_native64_horizon10_10k_seed1_rerun1
+  training_run_id: d6497a30

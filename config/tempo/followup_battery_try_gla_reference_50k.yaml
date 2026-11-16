@@ -1,0 +1,8 @@
+# Run on the local workstation once the Brev training job has been launched.
+# No instance lifecycle operations: leave binding-lavender-bedbug running.
+instance: binding-lavender-bedbug
+training_config: battery_try_smolvla_gla_reference_50k.yaml
+evaluation_config: eval_battery_try_gla_reference_50k.yaml
+remote_state: /data/RMBench-state/smolvla-train-eval-136454d4.json
+local_directory: ../../checkpoints/tempo_smolvla_battery_try_gla_reference_50k
+poll_seconds: 30

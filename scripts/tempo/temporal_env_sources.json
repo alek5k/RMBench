@@ -1,0 +1,7 @@
+{
+  "source_repository": "LTE-DP",
+  "files": {
+    "ltedp/envs/waitatgoal/waitatgoal_env.py": "eccfb8d5862b05265ae5461f2f26508ebdc3c0c3d0aad5bd84627ea3c63d117f",
+    "ltedp/envs/liftqa/lift_qa.py": "4c93cca50f004b16be600612a5349f194279599ea243bef94db13136944bceed"
+  }
+}

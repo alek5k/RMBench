@@ -1,0 +1,7 @@
+instance: calm-crimson-urial
+instance_id: zcb67bfcs
+training_run_id: b871c40f
+checkpoint: /data/RMBench-state/checkpoints/swap_T_tempo_predict50_act50_100k_seed0/100000
+eval_state: /data/RMBench-state/tempo-swap-T-final-eval-b871c40f.json
+poll_seconds: 30
+action: stop

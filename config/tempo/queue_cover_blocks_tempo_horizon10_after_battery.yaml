@@ -1,0 +1,6 @@
+predecessor_state: /data/RMBench-state/battery-try-tempo-horizon10-100k-seed0-queue.json
+predecessor_training_run_id: 58ae3446
+predecessor_eval_result: /data/RMBench-state/eval-handoffs/battery_try_tempo_horizon10_100k_seed0.json
+training_config: cover_blocks_tempo_horizon10_100k_seed0.yaml
+dataset_receipt: /data/RMBench-state/datasets/cover_blocks_prepared.json
+poll_seconds: 15

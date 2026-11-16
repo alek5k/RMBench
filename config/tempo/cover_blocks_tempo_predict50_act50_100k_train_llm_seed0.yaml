@@ -1,0 +1,65 @@
+# Fresh pretrained run; joint action + reconstruction loss is explicit.
+training:
+  reference_wandb_run: uts_robot_lab/RMBench/9b4a762e
+  task_name: cover_blocks
+  memory_backend: gla
+  gla_gate_normalizer: 16.0
+  allow_tf32: true
+  repo_id: local/rmbench-cover_blocks-aloha_agilex-v30
+  dataset_root: /data/RMBench-state/datasets/lerobot/local/rmbench-cover_blocks-aloha_agilex-v30
+  pretrained_path: lerobot/smolvla_base
+  pretrained_revision: 5e8d12a6e2975b0e5e5fce7c8caf47c371d257b6
+  vlm_revision: 7b375e1b73b11138ff12fe22c8f2822d8fe03467
+  output_dir: /data/RMBench-state/checkpoints/cover_blocks_tempo_predict50_act50_100k_train_llm_seed0
+  steps: 100000
+  batch_size: 8
+  num_workers: 8
+  sampling: shuffle
+  drop_last: false
+  shared_prefix_points_per_episode: 1
+  seed: 0
+  chunk_size: 50
+  n_action_steps: 50
+  learning_rate: 0.0001
+  minimum_lr: 2.5e-06
+  scheduler: smolvla
+  scheduler_decay_steps: 30000
+  warmup_steps: 1000
+  weight_decay: 1.0e-10
+  betas:
+  - 0.9
+  - 0.95
+  epsilon: 1.0e-08
+  grad_clip: 10.0
+  save_interval: 10000
+  log_interval: 10
+  wandb_enabled: true
+  wandb_log_checkpoints: false
+  wandb_project: RMBench
+  wandb_run_id: c74e092b
+  wandb_group: 261109_cover_blocks_tempo_predict50_act50_100k_train_llm_seed0
+  run_name: cover_blocks_tempo_predict50_act50_100k_train_llm_seed0
+  temporal_camera_keys:
+  - observation.images.camera1
+  embedding_cache_dir: /data/RMBench-state/embedding_cache/smolvla_cover_blocks_camera1_pool2
+  embedding_cache_batch_size: 64
+  temporal_objective: joint
+  train_language_model: true
+  wandb_tags:
+  - predict50-act50
+  - joint-loss
+  - train-llm
+  - frozen-visual-frontend
+memory:
+  num_tokens: 4
+  width: 64
+  layers: 2
+  heads: 4
+  mlp_ratio: 4
+  num_cameras: 1
+  spatial_pool_grid: 2
+  history_queries: 16
+  history_loss_weight: 1.0
+  max_history_frames: 2048
+  vision_encode_batch_size: 64
+  checkpoint_recurrence: false

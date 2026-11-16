@@ -37,7 +37,7 @@ args:
   policy.temporal_embedding_cache_enabled: true
   policy.temporal_image_cache_on_gpu: true
   policy.temporal_query_history_only: true
-  policy.temporal_embedding_normalize: false
+  policy.temporal_embedding_normalize: true
   policy.differential_lr: true
 
   batch_size: 16

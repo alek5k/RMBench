@@ -1,0 +1,5 @@
+predecessor_state: /data/RMBench-state/tempo-original-decay-horizon10-10k-seed1-training.json
+training_run_id: c95a9891
+evaluation_config: eval_waitatgoal_tempo_original_decay_horizon10_10k_seed1_100ep.yaml
+evaluation_wrapper: /data/RMBench-state/queues/liftqa-smolvla-four-evals-5f96e30c/scripts/tempo/run_temporal_eval_original.sh
+poll_seconds: 15

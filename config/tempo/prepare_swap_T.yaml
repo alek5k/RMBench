@@ -1,0 +1,14 @@
+# Prepare all official Swap T demonstrations, without a holdout or episode cap.
+dataset:
+  source_repo: TianxingChen/RMBench
+  source_revision: 5d8ff21038fba32ea549e9eee8497aaba9aab5cf
+  task: swap_T
+  source_config: demo_clean
+  env_cfg: aloha_agilex
+  raw_root: /data/RMBench-state/data
+  output_root: /data/RMBench-state/datasets/lerobot
+  repo_id: local/rmbench-swap_T-aloha_agilex-v30
+  resolution: [240, 320]
+  encoder_threads: 2
+  seed: 0
+  receipt: /data/RMBench-state/datasets/swap_T_prepared.json

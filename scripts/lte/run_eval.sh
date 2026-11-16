@@ -42,11 +42,25 @@ else
     CONFIG_PATH="${RMBENCH_ROOT}/${CONFIG_PATH}"
   fi
   [[ -f "${CONFIG_PATH}" ]] || { echo "Evaluation config not found: ${CONFIG_PATH}" >&2; exit 2; }
-  CONFIG_PYTHON=${RMBENCH_CONFIG_PYTHON:-python3}
+  # Evaluation manifests use PyYAML.  The base image's system Python is not
+  # guaranteed to include it, whereas the SmolVLA environment does.  An
+  # explicit override remains available for deployments with a different
+  # policy environment.
+  DEFAULT_CONFIG_PYTHON="${HOME}/miniforge3/envs/smolvla/bin/python"
+  if [[ -x "${DEFAULT_CONFIG_PYTHON}" ]]; then
+    CONFIG_PYTHON=${RMBENCH_CONFIG_PYTHON:-${DEFAULT_CONFIG_PYTHON}}
+  else
+    CONFIG_PYTHON=${RMBENCH_CONFIG_PYTHON:-python3}
+  fi
   eval "$("${CONFIG_PYTHON}" "${RMBENCH_ROOT}/scripts/lte/eval_config.py" "${CONFIG_PATH}" shell)"
 fi
 
 [[ "${TEST_NUM}" =~ ^[1-9][0-9]*$ ]] || { echo "episodes must be a positive integer" >&2; exit 2; }
+
+STATE_ROOT="${RMBENCH_STATE_ROOT:-${RMBENCH_ROOT}}"
+export PYTHONDONTWRITEBYTECODE="${PYTHONDONTWRITEBYTECODE:-1}"
+export WANDB_DIR="${WANDB_DIR:-${STATE_ROOT}/wandb}"
+mkdir -p "${STATE_ROOT}/logs" "${WANDB_DIR}"
 
 CHECKPOINT_LABEL="$(basename "${CKPT_NAME}")"
 CHECKPOINT_PARENT="$(basename "$(dirname "${CKPT_NAME}")")"
@@ -56,11 +70,10 @@ else
   CHECKPOINT_STEP="${CHECKPOINT_LABEL}"
 fi
 RUN="${MODE}-eval-${TASK}-$(date +%Y%m%d-%H%M%S)"
-LOG="${RMBENCH_ROOT}/logs/${RUN}.log"
-WANDB_LOG="${RMBENCH_ROOT}/logs/${RUN}-wandb.log"
-mkdir -p "${RMBENCH_ROOT}/logs"
+LOG="${STATE_ROOT}/logs/${RUN}.log"
+WANDB_LOG="${STATE_ROOT}/logs/${RUN}-wandb.log"
 
-CREDENTIAL_FILE="${RMBENCH_ROOT}/scripts/lte/.env"
+CREDENTIAL_FILE="${RMBENCH_CREDENTIAL_FILE:-${RMBENCH_ROOT}/scripts/lte/.env}"
 if [[ -r "${CREDENTIAL_FILE}" ]]; then
   set -a
   # shellcheck disable=SC1090
@@ -73,6 +86,15 @@ if [[ "${WANDB_ENABLED}" == true ]]; then
   export WANDB_PROJECT="${WANDB_PROJECT_CONFIG:-${WANDB_PROJECT:-}}"
   : "${WANDB_ENTITY:?wandb.entity is required when wandb.enabled is true}"
   : "${WANDB_PROJECT:?wandb.project is required when wandb.enabled is true}"
+fi
+
+# Training does not require simulator object meshes, but every RMBench
+# evaluation does.  Make config-driven evaluation self-contained: provision
+# the shared state-backed assets on first use rather than failing later inside
+# a simulator worker with a relative-path FileNotFoundError.
+if [[ ! -f "${RMBENCH_ROOT}/assets/objects/objaverse/list.json" ]]; then
+  echo "RMBench evaluation assets are missing; downloading them once into the shared state cache."
+  (cd "${RMBENCH_ROOT}" && bash scripts/_download_assets.sh)
 fi
 
 ADDITIONAL_INFO="ckpt_name=${CKPT_NAME},action_type=${ACTION_TYPE},test_num=${TEST_NUM},num_workers=${NUM_WORKERS},task_config=${TASK_CONFIG},instruction_type=${INSTRUCTION_TYPE},expert_check=${EXPERT_CHECK},frequency=${FREQUENCY},max_seed_attempts=${MAX_SEED_ATTEMPTS}"
@@ -98,6 +120,6 @@ if [[ "${WANDB_ENABLED}" == true ]]; then
     WANDB_RUN_NAME="${TASK}_${MODE}_eval_${CHECKPOINT_STEP}"
   fi
   screen -L -Logfile "${WANDB_LOG}" -dmS "${RUN}-wandb" bash -lc \
-    "cd '${RMBENCH_ROOT}'; exec '${HOME}/miniforge3/envs/${POLICY_CONDA_ENV}/bin/python' scripts/lte/log_eval_wandb.py --log-file '${LOG}' --mode '${MODE}' --task '${TASK}' --env-cfg '${ENV_CFG}' --checkpoint '${CKPT_NAME}' --seed '${SEED}' --run-name '${WANDB_RUN_NAME}' --screen-session '${RUN}'"
+    "cd '${RMBENCH_ROOT}'; exec '${HOME}/miniforge3/envs/${POLICY_CONDA_ENV}/bin/python' scripts/lte/log_eval_wandb.py --log-file '${LOG}' --mode '${MODE}' --task '${TASK}' --env-cfg '${ENV_CFG}' --checkpoint '${CKPT_NAME}' --seed '${SEED}' --run-name '${WANDB_RUN_NAME}' --group '${WANDB_EXPERIMENT_ID}' --screen-session '${RUN}'"
   printf 'W&B evaluation logger: %s-wandb\nW&B log: %s\n' "${RUN}" "${WANDB_LOG}"
 fi

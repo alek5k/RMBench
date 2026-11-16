@@ -1,0 +1,7 @@
+predecessor_state: /data/RMBench-state/gla-training-c7e551e2.json
+predecessor_training_run_id: c7e551e2
+predecessor_eval_state: /data/RMBench-state/waitatgoal-tempo-horizon10-20k-seed1-eval-queue.json
+training_config: waitatgoal_smolvla_mild_lr_decay_horizon10_20k_seed1.yaml
+defaults_config: waitatgoal_defaults.yaml
+require_native_warmup: true
+poll_seconds: 15

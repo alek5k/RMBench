@@ -1,0 +1,4 @@
+predecessor_state: /data/RMBench-state/waitatgoal-gla-constant-lr-10k-queue.json
+training_run_id: 666e444e
+evaluation_config: eval_waitatgoal_gla_constant_lr_10k_100ep.yaml
+poll_seconds: 15

@@ -1,0 +1,8 @@
+# Old completed native run is a config/checkpoint reference, NOT a resume source.
+predecessor_state: /data/RMBench-state/smolvla-training-94501382.json
+predecessor_training_run_id: '94501382'
+training_config: waitatgoal_smolvla_mild_decay_warmup_10k.yaml
+training_changes:
+  minimum_lr: 0.000075
+require_native_warmup: true
+poll_seconds: 15

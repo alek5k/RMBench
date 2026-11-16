@@ -1,0 +1,5 @@
+predecessor_state: /data/RMBench-state/tempo-training-b6a941ce.json
+training_run_id: b6a941ce
+evaluation_config: eval_waitatgoal_tempo_reconstruction_only_horizon10_10k_seed1_100ep.yaml
+evaluation_wrapper: /data/RMBench-state/queues/waitatgoal-reconstruction-eval-b6a941ce/run_waitatgoal_reconstruction_eval_remote.sh
+poll_seconds: 15

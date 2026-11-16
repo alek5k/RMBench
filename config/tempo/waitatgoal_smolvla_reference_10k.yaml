@@ -1,0 +1,39 @@
+# Fresh native SmolVLA control through the same trainer as GLA c952aa61.
+# No GLA modules, history loss, or embedding cache. Not a continuation of GLA.
+training:
+  policy_variant: smolvla
+  reference_wandb_run: uts_robot_lab/RMBench/c952aa61
+  task_name: waitatgoal
+  env_cfg_type: temporal
+  allow_tf32: true
+  repo_id: local/waitatgoal_v4
+  dataset_root: /data/RMBench-state/datasets/waitatgoal_v4
+  pretrained_path: lerobot/smolvla_base
+  pretrained_revision: 5e8d12a6e2975b0e5e5fce7c8caf47c371d257b6
+  vlm_revision: 7b375e1b73b11138ff12fe22c8f2822d8fe03467
+  output_dir: /data/RMBench-state/checkpoints/smolvla_waitatgoal_reference_10k
+  steps: 10000
+  batch_size: 8
+  num_workers: 8
+  sampling: shuffle
+  drop_last: false
+  shared_prefix_points_per_episode: 1
+  seed: 0
+  learning_rate: 0.0001
+  minimum_lr: 0.0000025
+  scheduler: smolvla
+  # Native scheduler rescales this preset for a 10k run: 333 warmup / 10k decay.
+  scheduler_decay_steps: 30000
+  warmup_steps: 1000
+  weight_decay: 1.0e-10
+  betas: [0.9, 0.95]
+  epsilon: 1.0e-8
+  grad_clip: 10.0
+  save_interval: 10000
+  log_interval: 10
+  wandb_enabled: true
+  wandb_log_checkpoints: false
+  wandb_project: RMBench
+  wandb_run_id: '94501382'
+  wandb_group: 261105_smolvla_waitatgoal_10k
+  run_name: waitatgoal_smolvla_10k

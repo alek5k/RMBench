@@ -1,0 +1,19 @@
+# Fresh training from the original pretrained model; no recovery/resume.
+execution: local
+state_root: /mnt/wdblack/tempo/waitatgoal-spatial-261110/rerun1
+input_state_root: /mnt/wdblack/tempo/waitatgoal-spatial-261110
+python: /home/sydney1/Repos/RMBench/.venv-tempo-smolvla/bin/python
+smovla_root: /home/sydney1/Repos/RMBench/.deps/tempo-smovla
+hf_home: /home/sydney1/.cache/huggingface
+defaults_config: waitatgoal_defaults.yaml
+reference_config: waitatgoal_tempo_mild_lr_decay_horizon10_10k_seed1.yaml
+cloud_queue_state: /data/RMBench-state/waitatgoal-spatial-reconstruction-261110.json
+runs:
+  - mode: spatial4
+    gpu_uuid: GPU-ee575f7f-efbc-06d7-a10d-c50993ff045c
+    training_config: waitatgoal_tempo_spatial4_horizon10_10k_seed1_local_rerun1.yaml
+    eval_config: eval_waitatgoal_tempo_spatial4_horizon10_10k_seed1_local_rerun1.yaml
+  - mode: native64
+    gpu_uuid: GPU-2c5eb813-551c-9bf2-0ff7-bb76e2e7ff36
+    training_config: waitatgoal_tempo_native64_horizon10_10k_seed1_local_rerun1.yaml
+    eval_config: eval_waitatgoal_tempo_native64_horizon10_10k_seed1_local_rerun1.yaml

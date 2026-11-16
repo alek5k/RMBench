@@ -1,0 +1,56 @@
+# Prepared for binding-lavender-bedbug; do not launch until it is provisioned.
+# Latest battery_try reference settings: GLA e84cae63 / native control bd463459.
+# Frozen vision/LLM; train action expert, native projections and GLA memory path
+# (memory/prefix projections/history decoder), as in the reference GLA run.
+training:
+  reference_wandb_run: uts_robot_lab/RMBench/p29v0sde
+  comparison_wandb_run: uts_robot_lab/RMBench/bd463459
+  memory_backend: gla
+  gla_gate_normalizer: 16.0
+  allow_tf32: true
+  repo_id: local/rmbench-battery_try-aloha_agilex-v30
+  dataset_root: /data/RMBench-state/datasets/lerobot/local/rmbench-battery_try-aloha_agilex-v30
+  pretrained_path: lerobot/smolvla_base
+  pretrained_revision: 5e8d12a6e2975b0e5e5fce7c8caf47c371d257b6
+  vlm_revision: 7b375e1b73b11138ff12fe22c8f2822d8fe03467
+  output_dir: /data/RMBench-state/checkpoints/tempo_smolvla_battery_try_gla_reference_50k
+  steps: 50000
+  batch_size: 8
+  num_workers: 8
+  sampling: shuffle
+  drop_last: false
+  shared_prefix_points_per_episode: 1
+  seed: 0
+  learning_rate: 0.0001
+  minimum_lr: 0.0000025
+  scheduler: smolvla
+  scheduler_decay_steps: 30000  # Retain the reference schedule; hold the LR floor to 50k.
+  warmup_steps: 1000
+  weight_decay: 1.0e-10
+  betas: [0.9, 0.95]
+  epsilon: 1.0e-8
+  grad_clip: 10.0
+  save_interval: 10000
+  log_interval: 10
+  wandb_enabled: true
+  wandb_log_checkpoints: false  # Metrics/config only; checkpoints stay on disk.
+  wandb_project: RMBench
+  wandb_run_id: 136454d4
+  wandb_group: 261105_tempo_smolvla_gla_battery_try_50k
+  run_name: battery_try_tempo_smolvla_gla_50k
+  temporal_camera_keys: [observation.images.camera1]
+  embedding_cache_dir: /data/RMBench-state/embedding_cache/smolvla_battery_try_camera1_pool2
+  embedding_cache_batch_size: 64
+memory:
+  num_tokens: 4
+  width: 64
+  layers: 2
+  heads: 4
+  mlp_ratio: 4
+  num_cameras: 1
+  spatial_pool_grid: 2
+  history_queries: 16
+  history_loss_weight: 1.0
+  max_history_frames: 2048
+  vision_encode_batch_size: 64
+  checkpoint_recurrence: false

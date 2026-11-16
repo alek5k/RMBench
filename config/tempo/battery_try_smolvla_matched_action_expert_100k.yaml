@@ -1,0 +1,30 @@
+# Native SmolVLA control matched to the GLA run, including episode-aware sampling.
+# No temporal modules, auxiliary loss, or embedding-cache reads.
+training:
+  policy_variant: smolvla
+  allow_tf32: true
+  repo_id: local/rmbench-battery_try-aloha_agilex-v30
+  dataset_root: /data/RMBench-state/datasets/lerobot/local/rmbench-battery_try-aloha_agilex-v30
+  pretrained_path: lerobot/smolvla_base
+  pretrained_revision: 5e8d12a6e2975b0e5e5fce7c8caf47c371d257b6
+  vlm_revision: 7b375e1b73b11138ff12fe22c8f2822d8fe03467
+  output_dir: /data/RMBench-state/checkpoints/smolvla_battery_try_matched_action_expert_100k
+  steps: 100000
+  batch_size: 8
+  num_workers: 4
+  history_bucket_batches: 32
+  shared_prefix_points_per_episode: 4
+  shared_prefix_window_frames: 32
+  seed: 0
+  learning_rate: 0.000025
+  minimum_lr: 0.0000025
+  warmup_steps: 1000
+  weight_decay: 1.0e-10
+  betas: [0.9, 0.95]
+  epsilon: 1.0e-8
+  grad_clip: 1.0
+  save_interval: 20000
+  log_interval: 10
+  wandb_enabled: true
+  wandb_project: RMBench
+  run_name: battery_try_smolvla_matched_action_expert_100k

@@ -1,0 +1,4 @@
+predecessor_state: /data/RMBench-state/smolvla-training-5ca813e7.json
+training_run_id: 5ca813e7
+evaluation_config: eval_waitatgoal_smolvla_holdout10_12k_100ep.yaml
+poll_seconds: 15

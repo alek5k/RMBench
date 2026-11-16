@@ -1,0 +1,15 @@
+# A cooperative eval barrier leaves both supervisor and training running.
+predecessor_state: /data/RMBench-state/waitatgoal-liftqa-gla-three-evals-prepared-queue.json
+predecessor_training_run_id: ab7b0d92
+eval_handoff: /data/RMBench-state/temporal-eval-handoff.json
+training_config: liftqa_smolvla_reference_20k.yaml
+poll_seconds: 10
+evaluations:
+  - training_config: waitatgoal_smolvla_reference_10k.yaml
+    eval_config: eval_waitatgoal_smolvla_reference_10k_100ep.yaml
+  - training_config: waitatgoal_smolvla_gla_reference_10k.yaml
+    eval_config: eval_waitatgoal_gla_reference_10k_100ep.yaml
+  - training_config: liftqa_smolvla_gla_reference_20k.yaml
+    eval_config: eval_liftqa_gla_reference_20k_100ep.yaml
+  - training_config: liftqa_smolvla_reference_20k.yaml
+    eval_config: eval_liftqa_smolvla_reference_20k_100ep.yaml

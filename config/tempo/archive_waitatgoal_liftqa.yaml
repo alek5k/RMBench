@@ -1,0 +1,11 @@
+instance: binding-lavender-bedbug
+remote_python: /home/shadeform/RMBench-state/envs/tempo-smolvla/bin/python
+local_directory: /mnt/wdblack/tempo
+poll_seconds: 60
+# Copy existing checkpoints now and pick up future 10k/20k checkpoints automatically.
+# No eval, training, W&B upload, instance shutdown or remote deletion.
+training_configs:
+  - waitatgoal_smolvla_reference_10k.yaml
+  - waitatgoal_smolvla_gla_reference_10k.yaml
+  - liftqa_smolvla_gla_reference_20k.yaml
+  - liftqa_smolvla_reference_20k.yaml

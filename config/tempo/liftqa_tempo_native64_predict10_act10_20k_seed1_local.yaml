@@ -1,0 +1,64 @@
+# User-corrected 10/10 horizons. Replaces the queued 50/10 job before training.
+# Same LiftQA optimizer/sampling and WaitAtGoal native64 reconstruction method.
+training:
+  reference_wandb_run: uts_robot_lab/RMBench/895576c1
+  task_name: liftqa
+  env_cfg_type: temporal
+  memory_backend: gla
+  temporal_objective: joint
+  history_reconstruction_target: history
+  history_reconstruction_layout: patches
+  temporal_visual_pooling: native
+  gla_gate_normalizer: 16.0
+  allow_tf32: true
+  repo_id: local/liftqa_v2
+  dataset_root: /home/sydney1/Repos/RMBench/logs/liftqa-native64-261110/datasets/liftqa_v2
+  pretrained_path: lerobot/smolvla_base
+  pretrained_revision: 5e8d12a6e2975b0e5e5fce7c8caf47c371d257b6
+  vlm_revision: 7b375e1b73b11138ff12fe22c8f2822d8fe03467
+  output_dir: /home/sydney1/Repos/RMBench/logs/liftqa-native64-261110/horizon10/checkpoints/liftqa_tempo_native64_predict10_act10_20k_seed1
+  steps: 20000
+  batch_size: 8
+  num_workers: 8
+  sampling: shuffle
+  drop_last: false
+  shared_prefix_points_per_episode: 1
+  seed: 1
+  chunk_size: 10
+  n_action_steps: 10
+  learning_rate: 0.0001
+  minimum_lr: 0.0000025
+  scheduler: smolvla
+  scheduler_decay_steps: 30000
+  warmup_steps: 1000  # Native short-run scaling: 666 effective updates for 20k.
+  weight_decay: 1.0e-10
+  betas: [0.9, 0.95]
+  epsilon: 1.0e-8
+  grad_clip: 10.0
+  save_interval: 10000
+  log_interval: 10
+  wandb_enabled: true
+  wandb_log_checkpoints: false
+  wandb_project: RMBench
+  wandb_run_id: d81228b7
+  wandb_group: 261110_tempo_liftqa_native64_predict10_act10_20k_seed1
+  run_name: liftqa_tempo_native64_predict10_act10_20k_seed1
+  wandb_tags: [reconstruction-effectiveness, reconstruction-native64, predict10-act10, local-5090]
+  temporal_camera_keys: [observation.images.camera1]
+  embedding_cache_dir: /home/sydney1/Repos/RMBench/logs/liftqa-native64-261110/embedding_cache/smolvla_liftqa_camera1_native64
+  # Same tested extraction batch as WaitAtGoal native64 on a 32GB RTX 5090.
+  # Cached fp16 features take ~120 KiB/frame; extraction activations dominate VRAM.
+  embedding_cache_batch_size: 64
+memory:
+  num_tokens: 4
+  width: 64
+  layers: 2
+  heads: 4
+  mlp_ratio: 4
+  num_cameras: 1
+  spatial_pool_grid: 8  # Retain all 8x8 post-connector tokens without extra pooling.
+  history_queries: 16  # Time lags, each reconstructing all 64 spatial positions.
+  history_loss_weight: 1.0
+  max_history_frames: 2048
+  vision_encode_batch_size: 64
+  checkpoint_recurrence: false

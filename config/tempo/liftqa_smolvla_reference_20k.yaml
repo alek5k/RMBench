@@ -1,0 +1,40 @@
+# Fresh native control matched to LiftQA GLA ab7b0d92 through the same trainer.
+# Train the action expert/projections; keep the vision encoder and LLM frozen.
+# No GLA, temporal reconstruction loss, or embedding cache.
+training:
+  policy_variant: smolvla
+  reference_wandb_run: uts_robot_lab/RMBench/ab7b0d92
+  task_name: liftqa
+  env_cfg_type: temporal
+  allow_tf32: true
+  repo_id: local/liftqa_v2
+  dataset_root: /data/RMBench-state/datasets/liftqa_v2
+  pretrained_path: lerobot/smolvla_base
+  pretrained_revision: 5e8d12a6e2975b0e5e5fce7c8caf47c371d257b6
+  vlm_revision: 7b375e1b73b11138ff12fe22c8f2822d8fe03467
+  output_dir: /data/RMBench-state/checkpoints/smolvla_liftqa_reference_20k
+  steps: 20000
+  batch_size: 8
+  num_workers: 8
+  sampling: shuffle
+  drop_last: false
+  shared_prefix_points_per_episode: 1
+  seed: 0
+  learning_rate: 0.0001
+  minimum_lr: 0.0000025
+  scheduler: smolvla
+  # Native preset rescales to 666 warmup steps and decay ending at 20k.
+  scheduler_decay_steps: 30000
+  warmup_steps: 1000
+  weight_decay: 1.0e-10
+  betas: [0.9, 0.95]
+  epsilon: 1.0e-8
+  grad_clip: 10.0
+  save_interval: 10000
+  log_interval: 10
+  wandb_enabled: true
+  wandb_log_checkpoints: false
+  wandb_project: RMBench
+  wandb_run_id: 5f96e30c
+  wandb_group: 261105_smolvla_liftqa_20k
+  run_name: liftqa_smolvla_20k

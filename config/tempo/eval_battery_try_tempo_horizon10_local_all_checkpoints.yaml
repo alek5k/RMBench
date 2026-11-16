@@ -1,0 +1,41 @@
+# All evaluations are local; GPU 1 belongs to another job and must not be used.
+source_root: /home/sydney1/Repos/RMBench/.deps/eval-source-a05/RMBench
+checkpoint_root: /mnt/wdblack/tempo/battery_try_tempo_horizon10_100k_seed0
+training_run_id: 58ae3446
+checkpoint_steps: [10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000]
+output_root: /mnt/wdblack/tempo/evaluations/battery_try_tempo_horizon10_58ae3446_local
+portable_root: /home/sydney1/Repos/RMBench/.deps/tempo-eval/battery-58ae3446-checkpoints
+vlm_assets: /home/sydney1/.cache/huggingface/hub/models--HuggingFaceTB--SmolVLM2-500M-Video-Instruct/snapshots/7b375e1b73b11138ff12fe22c8f2822d8fe03467
+smovla_root: /home/sydney1/Repos/RMBench/.deps/tempo-smovla
+cuda_visible_devices: GPU-ee575f7f-efbc-06d7-a10d-c50993ff045c
+smoke_episodes: 2
+launcher:
+  policy_name: TEMPO_SmolVLA
+  policy_python: /home/sydney1/Repos/RMBench/.venv-tempo-smolvla/bin/python
+  simulator_python: /home/sydney1/Repos/RMBench/.venv-tempo-rmbench-eval/bin/python
+  wandb_logger_script: /home/sydney1/Repos/RMBench/scripts/lte/log_eval_wandb.py
+  wandb_metadata_helper: /home/sydney1/Repos/XPolicyLab/utils/tempo_wandb.py
+  simulator_env:
+    LD_PRELOAD: /home/sydney1/Repos/RMBench/.deps/oidn/oidn-2.3.3.x86_64.linux/lib/libOpenImageDenoise.so.2.3.3
+    VR_OVERRIDE: /home/sydney1/Repos/RMBench/.deps/tempo-eval/no-vr
+evaluation:
+  task: battery_try
+  env_cfg: aloha_agilex
+  action_type: joint
+  episodes: 100
+  num_workers: 4
+  seed: 0
+  task_config: demo_clean
+  instruction_type: seen
+  expert_check: true
+  frequency: 30
+  max_seed_attempts: 5000
+wandb:
+  enabled: true
+  entity: uts_robot_lab
+  project: RMBench
+  run_name: battery_try_tempo_horizon10_100k_seed0_eval
+  group: 261106_tempo_battery_try_horizon10_100k_seed0
+  training_run_id: 58ae3446
+  checkpoint_in_name: true
+  tags: [local, checkpoint-sweep]

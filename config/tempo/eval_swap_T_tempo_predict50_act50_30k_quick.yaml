@@ -1,0 +1,30 @@
+launcher:
+  policy_name: TEMPO_SmolVLA
+  policy_python: /home/ubuntu/RMBench-state/envs/tempo-smolvla/bin/python
+  simulator_python: /home/ubuntu/miniforge3/envs/rmbench-eval/bin/python
+  checkpoint: /data/RMBench-state/checkpoints/swap_T_tempo_predict50_act50_100k_seed0/030000
+  output_root: /data/RMBench-state/evaluations/swap_T_tempo_predict50_act50_30k_quick
+  smovla_root: /data/RMBench-state/deps/smovla
+  wandb_logger_script: /data/RMBench-releases/e363a647604d798fa69e/RMBench/scripts/lte/log_eval_wandb.py
+  wandb_metadata_helper: /data/RMBench-releases/e363a647604d798fa69e/RMBench/XPolicyLab/utils/tempo_wandb.py
+evaluation:
+  task: swap_T
+  env_cfg: aloha_agilex
+  action_type: joint
+  episodes: 10
+  num_workers: 1
+  seed: 0
+  task_config: demo_clean
+  instruction_type: seen
+  expert_check: true
+  frequency: 30
+  max_seed_attempts: 5000
+wandb:
+  enabled: true
+  entity: uts_robot_lab
+  project: RMBench
+  run_name: swap_T_tempo_predict50_act50_100k_seed0_eval
+  checkpoint_in_name: true
+  group: 261109_tempo_swap_T_predict50_act50_100k_seed0
+  training_run_id: b871c40f
+  tags: [predict50-act50, quick-eval, concurrent-eval, episodes-10, workers-1]

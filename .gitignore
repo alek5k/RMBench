@@ -33,3 +33,7 @@ envs/curobo/*
 /.env
 /scripts/lte/.env
 logs/
+.deps/
+.venv-tempo-smolvla/
+.venv-tempo-rmbench-eval/
+/swap_T_stop_after_eval_*.lock

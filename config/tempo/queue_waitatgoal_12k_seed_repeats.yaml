@@ -1,0 +1,34 @@
+# CANCELLED by user 2026-11-05; source recipe retained for provenance only.
+# Remote queue is cancelled_by_user; generated run files were moved to trash.
+# After the seed-0 train/eval/train/eval sequence, this recipe would repeat each policy
+# with training seeds 1 and 2. Eval always uses the same base seed 0 (0..99).
+predecessor_state: /data/RMBench-state/waitatgoal-gla-mild-decay-warmup-12k-queue.json
+predecessor_eval_state: /data/RMBench-state/waitatgoal-gla-mild-decay-warmup-12k-eval-queue.json
+reference_states:
+  smolvla: /data/RMBench-state/waitatgoal-smolvla-mild-decay-warmup-12k-queue.json
+  tempo: /data/RMBench-state/waitatgoal-gla-mild-decay-warmup-12k-queue.json
+templates:
+  smolvla:
+    training: waitatgoal_smolvla_mild_decay_warmup_12k.yaml
+    evaluation: eval_waitatgoal_smolvla_mild_decay_warmup_12k_100ep.yaml
+  tempo:
+    training: waitatgoal_smolvla_gla_mild_decay_warmup_12k.yaml
+    evaluation: eval_waitatgoal_gla_mild_decay_warmup_12k_100ep.yaml
+defaults_config: waitatgoal_defaults.yaml
+evaluation_seed: 0
+poll_seconds: 15
+runtime_dir: /data/RMBench-state/queues/waitatgoal-12k-seed-repeats/generated
+log_dir: /data/RMBench-state/logs/waitatgoal-12k-seed-repeats
+runs:
+  - policy: smolvla
+    seed: 1
+    run_id: e185b4c7
+  - policy: tempo
+    seed: 1
+    run_id: f2a761d8
+  - policy: smolvla
+    seed: 2
+    run_id: b3948ec1
+  - policy: tempo
+    seed: 2
+    run_id: d4c962a5

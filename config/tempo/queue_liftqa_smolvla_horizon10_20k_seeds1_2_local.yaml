@@ -1,0 +1,14 @@
+execution: local
+state_root: /home/sydney1/Repos/RMBench/logs/liftqa-smolvla-horizon10-261110
+python: /home/sydney1/Repos/RMBench/.venv-tempo-smolvla/bin/python
+smovla_root: /home/sydney1/Repos/RMBench/.deps/tempo-smovla
+hf_home: /home/sydney1/.cache/huggingface
+gpu_uuid: GPU-ee575f7f-efbc-06d7-a10d-c50993ff045c  # GPU 0; TEMPO owns GPU 1.
+poll_seconds: 30
+reference_config: liftqa_smolvla_reference_20k.yaml
+runs:
+  - seed: 1
+    training_config: liftqa_smolvla_horizon10_20k_seed1_local.yaml
+  - seed: 2
+    training_config: liftqa_smolvla_horizon10_20k_seed2_local.yaml
+# Sequential independent full-data runs; no evaluation or instance action.

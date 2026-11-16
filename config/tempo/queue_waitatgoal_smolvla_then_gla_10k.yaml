@@ -1,0 +1,5 @@
+predecessor_state: /data/RMBench-state/smolvla-training-94501382.json
+predecessor_training_run_id: '94501382'
+training_config: waitatgoal_smolvla_gla_reference_10k.yaml
+reference_gla_config: waitatgoal_smolvla_gla_reference_50k.yaml
+poll_seconds: 15

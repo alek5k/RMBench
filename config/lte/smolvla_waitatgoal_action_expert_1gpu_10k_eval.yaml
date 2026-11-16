@@ -1,0 +1,38 @@
+# Baseline SmolVLA action-expert-only counterpart to the prior LTE control.
+launcher:
+  task: waitatgoal
+  env_cfg: temporal
+  experiment_id: 261025_smolvla_waitatgoal_action_expert_10k
+  post_train_temporal_evals: true
+  num_processes: 1
+  cuda_visible_devices: "0"
+  conda_env: RMBench
+  single_camera: true
+  dataset: {repo_ids: [waitatgoal_v4], temporal: true, download: false}
+args:
+  policy.path: lerobot/smolvla_base
+  policy.device: cuda
+  policy.push_to_hub: false
+  policy.freeze_vision_encoder: true
+  policy.train_expert_only: true
+  policy.train_state_proj: true
+  policy.input_features:
+    observation.state: {type: STATE, shape: [2]}
+    observation.images.camera1: {type: VISUAL, shape: [3, 144, 144]}
+  policy.output_features: {action: {type: ACTION, shape: [2]}}
+  batch_size: 8
+  dataset.repo_id: local/waitatgoal_v4
+  dataset.root: ~/RMBench-state/datasets/waitatgoal_v4
+  dataset.video_backend: pyav
+  output_dir: ../../checkpoints/smolvla_waitatgoal_action_expert_1gpu_10k
+  job_name: waitatgoal_smolvla_action_expert_1gpu_10k
+  wandb.enable: true
+  wandb.entity: uts_robot_lab
+  wandb.project: RMBench
+  steps: 10000
+  save_freq: 5000
+  log_freq: 10
+  num_workers: 8
+  eval_freq: 0
+  seed: 0
+  rename_map: {observation.image: observation.images.camera1}
